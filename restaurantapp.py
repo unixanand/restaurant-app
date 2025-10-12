@@ -9,28 +9,52 @@ import pytz
 import oracledb
 import os
 import re
+from dotenv import load_dotenv
+import logging
+
+# Define BASE_DIR for consistent file paths
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+load_dotenv()  # Load environment variables from .env file
+
+def get_connection():
+    """Load DB credentials from environment variables and connect to Oracle."""
+    user = os.environ.get('DB_USER')
+    password = os.environ.get('DB_PASSWORD')
+    dsn = os.environ.get('DB_DSN')
+    if not all([user, password, dsn]):
+        st.error("Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
+        return None
+    try:
+        connection = oracledb.connect(user=user, password=password, dsn=dsn)
+        st.success("Connected to Oracle Database!")
+        return None
+    except Exception as e:
+        st.error(f"DB Connection Error: {e}")
+        return None
 
 # --- Inlined Functions from Original App (Adapted for Streamlit) ---
 
+
+
 def get_connection():
-    """Load DB credentials and connect to Oracle."""
-    path = "./Files/db_prop.txt"
-    if not os.path.exists(path):
-        st.error("DB config file not found! Check path: ./Files/db_prop.txt")
+    """Load DB credentials from environment variables and connect to Oracle."""
+    user = os.environ.get('DB_USER')
+    password = os.environ.get('DB_PASSWORD')
+    dsn = os.environ.get('DB_DSN')  # e.g., 'host:port/service_name'
+    
+    if not all([user, password, dsn]):
+        st.error("Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
         return None
-    with open(path, "r") as fp:
-        conn_info = fp.read().strip().split(',')
-    if len(conn_info) < 3:
-        st.error("Invalid DB config file format. Expected: user,password,dsn")
-        return None
-    user, password, dsn = conn_info[0].strip(), conn_info[1].strip(), conn_info[2].strip()
+    
     try:
         connection = oracledb.connect(user=user, password=password, dsn=dsn)
-        st.success("Connected to Oracle Database 23ai Free!")
+        st.success("Connected to Oracle Database!")
         return connection
     except Exception as e:
         st.error(f"DB Connection Error: {e}")
         return None
+
 
 def load_stock_txn_data(connection) :
     rec_cnt = 0
@@ -328,20 +352,20 @@ def execute_qry(connection, qry_str,column_names) :
     cursor.close()
     return df
 
-def pull_month_data(connection) :
-    path = "./Files/week_wise_sales.txt"
-    fp = open(path,"r")
+def pull_month_data(connection):
+    path = os.path.join(BASE_DIR, "Files", "week_wise_sales.txt")
+    with open(path, "r") as fp:
+        qry = fp.read()
     cursor = connection.cursor()
-    qry = fp.read()
     cursor.execute(qry)
     rows = cursor.fetchall()
-    df = pd.DataFrame(rows, columns =['WeekNo','Category','Item','Tot.Quantity','Tot.Sales'])
+    df = pd.DataFrame(rows, columns=['WeekNo', 'Category', 'Item', 'Tot.Quantity', 'Tot.Sales'])
     cursor.close()
     return df
 
 def get_month_data(connection) :
     item_lis = []
-    path = "./Files/week_wise_sales.txt"
+    path = os.path.join(BASE_DIR, "Files", "week_wise_sales.txt")
     fp = open(path,"r")
     cursor = connection.cursor()
     qry = fp.read()
@@ -355,7 +379,7 @@ def get_month_data(connection) :
         
     cursor.close()
     return item_lis
-    
+   
 
 def overall_sales_fig(connection, period='daily'):
     """Generate overall sales chart (similar to coffee)."""
@@ -420,23 +444,23 @@ def Week_sale_items(connection) :
     
 #
 
-def validate_item(connection,item) :
-     
+def validate_item(connection, item):
     cursor = connection.cursor()
     sel_qry = "select 1 from BULK_ORDER_TBL where item_name = :itm"
     try:
-        cursor.execute(sel_qry,{"itm" :item})
-    except oracledb.DatabaseError as e:
-        st.error(f"DB Fetch Error: {e}")
-    
-    row = cursor.fetchone()
-    
-    if row is None :
-        
-        return 0
-    else :
-        
+        cursor.execute(sel_qry, {"itm": item})
+        row = cursor.fetchone()
+        cursor.close()
+        if row is None:
+            logging.warning(f"Invalid item: {item}")
+            return 0
+        logging.info(f"Validated item: {item}")
         return 1
+    except oracledb.DatabaseError as e:
+        logging.error(f"DB Fetch Error for item {item}: {e}")
+        st.error(f"DB Fetch Error: {e}")
+        return 0
+
 
 def get_item_stock(connection, item,qty) :
     chk = check_time()
@@ -492,29 +516,32 @@ def get_item_stock(connection, item,qty) :
         cursor.close() 
         return avail_stock, qty
     
-                   
-def insert_log(connection,file,message) :
-    if len(file) == 0 :
-        #st.write("returning here")
+
+
+
+logging.basicConfig(level=logging.INFO, filename=os.path.join(BASE_DIR, 'Bulk_Import', 'bulk_order.log'))
+
+def insert_log(connection, file, message):
+    if not file:
+        logging.info("No file provided for logging")
         return
     cursor = connection.cursor()
-    #st.write(file,message)
-    sel_qry = "select 1 from bulk_order_log_tbl where value_date=trunc(sysdate) and log_message = :msg and file_name= :fil"
-    cursor.execute(sel_qry,{"msg" : message, "fil" : file})
+    sel_qry = "select 1 from bulk_order_log_tbl where value_date=trunc(sysdate) and log_message = :msg and file_name = :fil"
+    cursor.execute(sel_qry, {"msg": message, "fil": file})
     row = cursor.fetchone()
     cursor.close()
-    
-    if row is None :
+    if row is None:
         cursor = connection.cursor()
-        ins_qry = "insert into bulk_order_log_tbl(value_date,file_name,log_message) values(trunc(sysdate),:2,:3)"
+        ins_qry = "insert into bulk_order_log_tbl(value_date, file_name, log_message) values(trunc(sysdate), :2, :3)"
         try:
-            cursor.execute(ins_qry, {"2" : file, "3" : message})
+            cursor.execute(ins_qry, {"2": file, "3": message})
+            logging.info(f"Logged: {message} for file {file}")
         except oracledb.DatabaseError as e:
-            
+            logging.error(f"DB Insert Error: {e}")
             return
-        
         connection.commit()
         cursor.close()
+                   
 
 def load_bulk_header(connection,file,status) :
     if len(file) == 0 :
@@ -1462,10 +1489,13 @@ elif portal == "Corporate (Admin)":
             log_str = ""
             
             
-            log_path = "./Bulk_Import/bulk_order.log"
-            file_path = "./Bulk_Import/loaded_file.txt"
+            #log_path = "./Bulk_Import/bulk_order.log"
+            #file_path = "./Bulk_Import/loaded_file.txt"
+
+            log_path = os.path.join(BASE_DIR, "Bulk_Import", "bulk_order.log")
+            file_path = os.path.join(BASE_DIR, "Bulk_Import", "loaded_file.txt")
             
-            with open(log_path,"w") as fp :
+            with open(log_path,"w+") as fp :
             
                 current_date = date.today()
             
