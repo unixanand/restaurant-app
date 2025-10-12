@@ -15,6 +15,14 @@ import logging
 # Define BASE_DIR for consistent file paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+
+FILES_DIR = os.environ.get('FILES_DIR', os.path.join(BASE_DIR, 'Files'))
+BULK_DIR = os.environ.get('BULK_DIR', os.path.join(BASE_DIR, 'Bulk_Import'))
+REPORTS_DIR = os.environ.get('REPORTS_DIR', os.path.join(BASE_DIR, 'reports'))
+os.makedirs(FILES_DIR, exist_ok=True)
+os.makedirs(BULK_DIR, exist_ok=True)
+os.makedirs(REPORTS_DIR, exist_ok=True)
+
 load_dotenv()  # Load environment variables from .env file
 
 def get_connection():
@@ -353,7 +361,7 @@ def execute_qry(connection, qry_str,column_names) :
     return df
 
 def pull_month_data(connection):
-    path = os.path.join(BASE_DIR, "Files", "week_wise_sales.txt")
+    path = os.path.join(FILES_DIR, "week_wise_sales.txt")
     with open(path, "r") as fp:
         qry = fp.read()
     cursor = connection.cursor()
@@ -1121,7 +1129,8 @@ elif portal == "Corporate (Admin)":
                             # Optional: Confirm generation
                             st.success("Excel ready for download (generated in memory—no file written to disk).")
                     else :
-                        file_name = f"./reports/dynamic_report_{rep_name}.xlsx"
+                        #file_name = f"./reports/dynamic_report_{rep_name}.xlsx"
+                        file_name = os.path.join(REPORTS_DIR, f"dynamic_{item_option}_sales_report.xlsx")
                         df_sales.to_excel(file_name, index=False)
                         with open(file_name, 'rb') as f:
                             #rep_file_name = f"./reports/dynamic_sales_report_{date_start}_{date_end}.xlsx"
@@ -1134,7 +1143,8 @@ elif portal == "Corporate (Admin)":
             if st.button("Generate Xcel Report"):
                 df_sales =  pull_week_data(connection)
                 st.dataframe(df_sales)
-                file_name = f"./reports/dynamic_Weekly_report.xlsx"
+                #file_name = f"./reports/dynamic_Weekly_report.xlsx"
+                file_name = os.path.join(REPORTS_DIR,"dynamic_Weekly_report.xlsx")
                 df_sales.to_excel(file_name, index=False)
                 with open(file_name, 'rb') as f:
                      st.download_button("Download Dynamic Excel", f.read(), file_name=file_name)
@@ -1492,8 +1502,11 @@ elif portal == "Corporate (Admin)":
             #log_path = "./Bulk_Import/bulk_order.log"
             #file_path = "./Bulk_Import/loaded_file.txt"
 
-            log_path = os.path.join(BASE_DIR, "Bulk_Import", "bulk_order.log")
-            file_path = os.path.join(BASE_DIR, "Bulk_Import", "loaded_file.txt")
+            #log_path = os.path.join(BASE_DIR, "Bulk_Import", "bulk_order.log")
+            #file_path = os.path.join(BASE_DIR, "Bulk_Import", "loaded_file.txt")
+
+            log_path = os.path.join(BULK_DIR, "bulk_order.log")
+            file_path = os.path.join(BULK_DIR, "loaded_file.txt")
             
             with open(log_path,"w+") as fp :
             
