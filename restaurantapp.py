@@ -16,6 +16,11 @@ import logging
 from streamlit.web import cli as stcli
 import sys
 
+
+if __name__ == "__main__":
+    import streamlit as st
+    st.write("This script should be run with 'streamlit run restaurantapp.py'. Running in Docker.")
+'''
 # Add health check
 if 'health' in sys.argv:
     print("OK")
@@ -27,7 +32,7 @@ if __name__ == "__main__":
     logging.info(f"Starting Streamlit on port {port}")
     sys.argv = ["streamlit", "run", "restaurantapp.py", f"--server.port={port}", "--server.address=0.0.0.0", "--server.headless=true"]
     sys.exit(stcli.main())
-
+'''
 # Define BASE_DIR for consistent file paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
