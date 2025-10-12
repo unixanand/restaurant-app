@@ -25,7 +25,7 @@ if 'health' in sys.argv:
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8501))
     logging.info(f"Starting Streamlit on port {port}")
-    sys.argv = ["streamlit", "run", "app.py", f"--server.port={port}", "--server.address=0.0.0.0", "--server.headless=true"]
+    sys.argv = ["streamlit", "run", "restaurantapp.py", f"--server.port={port}", "--server.address=0.0.0.0", "--server.headless=true"]
     sys.exit(stcli.main())
 
 # Define BASE_DIR for consistent file paths
