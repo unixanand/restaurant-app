@@ -17,22 +17,8 @@ from streamlit.web import cli as stcli
 import sys
 
 
-if __name__ == "__main__":
-    import streamlit as st
-    st.write("This script should be run with 'streamlit run restaurantapp.py'. Running in Docker.")
-'''
-# Add health check
-if 'health' in sys.argv:
-    print("OK")
-    sys.exit(0)
 
-# Existing code...
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8501))
-    logging.info(f"Starting Streamlit on port {port}")
-    sys.argv = ["streamlit", "run", "restaurantapp.py", f"--server.port={port}", "--server.address=0.0.0.0", "--server.headless=true"]
-    sys.exit(stcli.main())
-'''
+
 # Define BASE_DIR for consistent file paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -815,6 +801,7 @@ if portal == "Public (Order)":
                 item_name = order_df.loc[cancel_idx, 'Item']
                 if cancel_qty == 0:
                     cancel_qty = order_df.loc[cancel_idx, 'Qty']
+                    
                 st.session_state.stock_rec[item_name] += cancel_qty
                 if cancel_qty == order_df.loc[cancel_idx, 'Qty']:
                     del st.session_state.order_menu[cancel_idx]
@@ -1098,7 +1085,7 @@ elif portal == "Corporate (Admin)":
                     fp.close()
                 elif report_choice == "Tea" :
                     rep_name="Tea"
-                    fp = open("./Files/generic_Tea_sql.txt","r")
+                    fp = open("./Files/generic_tea_sql.txt","r")
                     query = fp.read()
                     fp.close()
                 elif report_choice == "Chat" :
@@ -1151,7 +1138,7 @@ elif portal == "Corporate (Admin)":
                             st.success("Excel ready for download (generated in memory—no file written to disk).")
                     else :
                         #file_name = f"./reports/dynamic_report_{rep_name}.xlsx"
-                        file_name = os.path.join(REPORTS_DIR, f"dynamic_{item_option}_sales_report.xlsx")
+                        file_name = os.path.join(REPORTS_DIR, f"dynamic_{report_choice}_sales_report.xlsx")
                         df_sales.to_excel(file_name, index=False)
                         with open(file_name, 'rb') as f:
                             #rep_file_name = f"./reports/dynamic_sales_report_{date_start}_{date_end}.xlsx"
@@ -1529,7 +1516,7 @@ elif portal == "Corporate (Admin)":
             log_path = os.path.join(BULK_DIR, "bulk_order.log")
             file_path = os.path.join(BULK_DIR, "loaded_file.txt")
             
-            with open(log_path,"w+") as fp :
+            with open(log_path,"a") as fp :
             
                 current_date = date.today()
             
