@@ -52,24 +52,6 @@ def get_connection():
 
 
 
-def get_connection():
-    """Load DB credentials from environment variables and connect to Oracle."""
-    user = os.environ.get('DB_USER')
-    password = os.environ.get('DB_PASSWORD')
-    dsn = os.environ.get('DB_DSN')  # e.g., 'host:port/service_name'
-    
-    if not all([user, password, dsn]):
-        st.error("Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
-        return None
-    
-    try:
-        connection = oracledb.connect(user=user, password=password, dsn=dsn)
-        st.success("Connected to Oracle Database!")
-        return connection
-    except Exception as e:
-        st.error(f"DB Connection Error: {e}")
-        return None
-
 
 def load_stock_txn_data(connection) :
     rec_cnt = 0
@@ -1532,6 +1514,10 @@ elif portal == "Corporate (Admin)":
                 print(f"Order file: {uploaded_file}\n",file=fp)
                 log_str += f"Order file: {uploaded_file}\n"
                 if uploaded_file is not None :
+                    target_path = os.path.join(BULK_DIR, "bulk_order.xlsx")
+                    with open(target_path, "wb") as f:
+                        f.write(uploaded_file.getvalue())
+                        f.close()
                     fname.write(log_str)
                 fname.close()
                 fname = open(file_path,"r")
