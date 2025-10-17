@@ -610,6 +610,15 @@ def get_item_price(connection,item,qty) :
 ##
 
 # --- Initialize Session State ---
+
+if 'initialized' not in st.session_state:
+    st.session_state.order_menu = {}
+    st.session_state.stock_rec = {}
+    st.session_state.tax_data = {}
+    st.session_state.tax_lis = {}
+    st.session_state.bulk_lis = []
+    st.session_state.initialized = True
+    
 if 'order_menu' not in st.session_state:
     st.session_state.order_menu = {}
     st.session_state.stock_rec = {}
@@ -1497,6 +1506,10 @@ elif portal == "Corporate (Admin)":
 
             log_path = os.path.join(BULK_DIR, "bulk_order.log")
             file_path = os.path.join(BULK_DIR, "loaded_file.txt")
+
+            logging.basicConfig(level=logging.INFO, filename=os.path.join(BULK_DIR, 'bulk_order.log'), force=True)
+            logger = logging.getLogger()
+            logger.info("App started")
             
             with open(log_path,"a") as fp :
             

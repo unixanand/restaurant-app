@@ -1,0 +1,1 @@
+python -c "import oracledb; conn = oracledb.connect(user='c##tester', password='learner123', dsn='localhost:1521/FREE'); print('Connected'); conn.close()"

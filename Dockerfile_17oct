@@ -1,0 +1,24 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Install only essential system dependencies (no Oracle client needed)
+RUN apt-get update && apt-get install -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p Files Bulk_Import reports logs
+
+EXPOSE 8501
+
+# Remove Oracle environment variables since we're using thin mode
+# ENV ORACLE_HOME=...  # No longer needed
+# ENV LD_LIBRARY_PATH=...  # No longer needed
+
+CMD ["streamlit", "run", "restaurantapp.py", "--server.port=8501", "--server.address=0.0.0.0"]
