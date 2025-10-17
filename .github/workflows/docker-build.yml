@@ -1,0 +1,11 @@
+name: Build Docker Image
+on:
+  push:
+    branches: [main, feature/*]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build --no-cache -t restaurant-app . --progress=plain
