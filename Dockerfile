@@ -7,7 +7,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Final stage
 FROM python:3.12-slim
 WORKDIR /app
+# Copy Python packages and Streamlit executable
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
 RUN echo "deb http://deb.debian.org/debian bookworm main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://deb.debian.org/debian-security bookworm-security main contrib non-free" >> /etc/apt/sources.list \
     && apt-get update \

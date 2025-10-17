@@ -787,7 +787,7 @@ if portal == "Public (Order)":
             with col1:
                 cancel_idx = st.selectbox("Cancel Item #", options=list(st.session_state.order_menu.keys()))
             with col2:
-                cancel_qty = st.number_input("Cancel Qty (0 for full)", min_value=0, max_value=order_df.loc[cancel_idx, 'Qty'])
+                cancel_qty = st.number_input("Cancel Qty (partial for full)", min_value=1, max_value=order_df.loc[cancel_idx, 'Qty'])
             if st.button("Cancel"):
                 item_name = order_df.loc[cancel_idx, 'Item']
                 if cancel_qty == 0:
