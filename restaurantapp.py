@@ -17,7 +17,7 @@ from streamlit.web import cli as stcli
 import sys
 
 
-
+#oracledb.init_oracle_client(thick=False)
 
 # Define BASE_DIR for consistent file paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -43,7 +43,7 @@ def get_connection():
     try:
         connection = oracledb.connect(user=user, password=password, dsn=dsn)
         st.success("Connected to Oracle Database!")
-        return None
+        return connection
     except Exception as e:
         st.error(f"DB Connection Error: {e}")
         return None
