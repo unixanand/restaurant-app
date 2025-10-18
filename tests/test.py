@@ -1,16 +1,4 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-from datetime import datetime, timedelta, date
-import time
-import pytz
 import oracledb
-import os
-import re
-from dotenv import load_dotenv
-import logging
 
 def get_connection():
     """Load DB credentials from environment variables and connect to Oracle."""
@@ -28,4 +16,4 @@ def get_connection():
         st.error(f"DB Connection Error: {e}")
         return None
 
-get_connection()
+connect = get_connection()
