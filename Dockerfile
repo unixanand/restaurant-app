@@ -22,7 +22,7 @@ RUN unzip instantclient-basiclite-linuxx64.zip -d /opt/oracle \
     && echo "/opt/oracle/instantclient_23_9" > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig
 COPY . .
-RUN mkdir -p Files Bulk_Import reports logs
+RUN mkdir -p Files Bulk_Import reports logs tests
 EXPOSE 8501
 ENV ORACLE_HOME=/opt/oracle/instantclient_23_9
 ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_23_9
