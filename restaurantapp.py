@@ -254,6 +254,25 @@ def coffee_sales_fig(connection, period):
         return fig
     return None
 
+def coffee_sales_data(connection, period):
+    """Generate coffee sales chart."""
+    cursor = connection.cursor()
+    if period == 'Daily':
+        qry = "SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE item_name in (SELECT coffee_name FROM coffee_menu_tbl) AND value_date = trim(sysdate) group by item_name"
+    elif period == 'Weekly':
+        week_start = (datetime.now() - timedelta(days=datetime.now().weekday())).strftime("%d-%b-%Y").upper()
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE value_date >= '{week_start}' AND item_name in (SELECT coffee_name FROM coffee_menu_tbl) group by item_name"
+    else:  # monthly
+        year_month = datetime.now().strftime("%Y-%m")
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE to_char(value_date, 'YYYY-MM') = '{year_month}' AND item_name in (SELECT coffee_name FROM coffee_menu_tbl) group by item_name"
+    cursor.execute(qry)
+    rows = cursor.fetchall()
+    df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
+    cursor.close()
+    if not df.empty:
+        return df
+    return None
+
 def tea_sales_fig(connection, period='daily'):
     """Generate tea sales chart (similar to coffee)."""
     cursor = connection.cursor()
@@ -277,6 +296,26 @@ def tea_sales_fig(connection, period='daily'):
         return fig
     return None
 
+def tea_sales_data(connection, period='daily'):
+    """Generate tea sales chart (similar to coffee)."""
+    cursor = connection.cursor()
+    if period == 'Daily':
+        qry = "SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE item_name in (SELECT tea_name FROM tea_menu_tbl) AND value_date = trim(sysdate) group by item_name"
+    elif period == 'Weekly':
+        week_start = (datetime.now() - timedelta(days=datetime.now().weekday())).strftime("%d-%b-%Y").upper()
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE value_date >= '{week_start}' AND item_name in (SELECT tea_name FROM tea_menu_tbl) group by item_name"
+    else:
+        year_month = datetime.now().strftime("%Y-%m")
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE to_char(value_date, 'YYYY-MM') = '{year_month}' AND item_name in (SELECT tea_name FROM tea_menu_tbl) group by item_name"
+    cursor.execute(qry)
+    rows = cursor.fetchall()
+    df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
+    cursor.close()
+    if not df.empty:
+        return df
+    return None
+
+
 def chat_sales_fig(connection, period='daily'):
     """Generate chat sales chart (similar to coffee)."""
     cursor = connection.cursor()
@@ -294,10 +333,29 @@ def chat_sales_fig(connection, period='daily'):
     cursor.close()
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Tea Sales ({period.capitalize()})')
-        ax.set_xlabel('Tea Type')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Chat Sales ({period.capitalize()})')
+        ax.set_xlabel('Chat Type')
         ax.set_ylabel('Sales Quantity')
         return fig
+    return None
+
+def chat_sales_data(connection, period='daily'):
+    """Generate chat sales chart (similar to coffee)."""
+    cursor = connection.cursor()
+    if period == 'Daily':
+        qry = "SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE item_name in (SELECT chat_name FROM chat_menu_tbl) AND value_date = trim(sysdate) group by item_name"
+    elif period == 'Weekly':
+        week_start = (datetime.now() - timedelta(days=datetime.now().weekday())).strftime("%d-%b-%Y").upper()
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE value_date >= '{week_start}' AND item_name in (SELECT chat_name FROM chat_menu_tbl) group by item_name"
+    else:
+        year_month = datetime.now().strftime("%Y-%m")
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE to_char(value_date, 'YYYY-MM') = '{year_month}' AND item_name in (SELECT chat_name FROM chat_menu_tbl) group by item_name"
+    cursor.execute(qry)
+    rows = cursor.fetchall()
+    df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
+    cursor.close()
+    if not df.empty:
+        return df
     return None
 
 def Spl_sales_fig(connection, period='daily'):
@@ -321,6 +379,26 @@ def Spl_sales_fig(connection, period='daily'):
         ax.set_xlabel('Snack Type')
         ax.set_ylabel('Sales Quantity')
         return fig
+    return None
+
+#
+def Spl_sales_data(connection, period='daily'):
+    """Generate snacks sales chart (similar to coffee)."""
+    cursor = connection.cursor()
+    if period == 'Daily':
+        qry = "SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE item_name in (SELECT item_name FROM SPECIAL_SNACKS_TBL) AND value_date = trim(sysdate) group by item_name"
+    elif period == 'Weekly':
+        week_start = (datetime.now() - timedelta(days=datetime.now().weekday())).strftime("%d-%b-%Y").upper()
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE value_date >= '{week_start}' AND item_name in (SELECT item_name FROM SPECIAL_SNACKS_TBL) group by item_name"
+    else:
+        year_month = datetime.now().strftime("%Y-%m")
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE to_char(value_date, 'YYYY-MM') = '{year_month}' AND item_name in (SELECT item_name FROM SPECIAL_SNACKS_TBL) group by item_name"
+    cursor.execute(qry)
+    rows = cursor.fetchall()
+    df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
+    cursor.close()
+    if not df.empty:
+        return df
     return None
 
 def pull_week_data(connection) :
@@ -399,6 +477,25 @@ def overall_sales_fig(connection, period='daily'):
         ax.set_xlabel('Item Type')
         ax.set_ylabel('Sales Quantity')
         return fig
+    return None
+
+def overall_sales_data(connection, period='daily'):
+    """Generate overall sales chart (similar to coffee)."""
+    cursor = connection.cursor()
+    if period == 'Daily':
+        qry = "SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE  value_date = trim(sysdate) group by item_name"
+    elif period == 'Weekly':
+        week_start = (datetime.now() - timedelta(days=datetime.now().weekday())).strftime("%d-%b-%Y").upper()
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE value_date >= '{week_start}'  group by item_name"
+    else:
+        year_month = datetime.now().strftime("%Y-%m")
+        qry = f"SELECT item_name, sum(quantity) as qty FROM sales_dtl_tbl WHERE to_char(value_date, 'YYYY-MM') = '{year_month}'  group by item_name"
+    cursor.execute(qry)
+    rows = cursor.fetchall()
+    df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
+    cursor.close()
+    if not df.empty:
+        return df
     return None
 
 ##
@@ -663,41 +760,39 @@ if portal == "Public (Order)":
     tab1, tab2, tab3, tab4, tab_cart, tab_bill = st.tabs(["Coffee", "Tea", "Chat", "Special", "Cart", "Bill"])
     
     with tab1:  # Coffee
+        # Coffee
         st.subheader("☕ Coffee Menu")
         df_coffee = fetch_coffee_df(connection)
-        
+
         if not df_coffee.empty:
             st.dataframe(df_coffee[['ItemNo', 'Name', 'Price']])
-            with st.form("coffee_order"):
-                
-                item_options = df_coffee.set_index('ItemNo')['Name'].to_dict()
-                selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
-                item_name = item_options[selected_item_no]
-                max_stock = st.session_state.stock_rec.get(item_name, 0)
-                quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0)
-                
-                col1, col2 = st.columns(2)
-                with col1:
-                    
-                    submitted = st.form_submit_button("Add to Order")
-                    
-                    if submitted :
-                        
-                        if quantity > 0 :
-                            price = df_coffee[df_coffee['ItemNo'] == selected_item_no]['Price'].values[0]
-                            tax_cat = df_coffee[df_coffee['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
-                            idx = len(st.session_state.order_menu)
-                            st.session_state.order_menu[idx] = [item_name, quantity, price]
-                            st.session_state.tax_lis[item_name] = tax_cat
-                            st.session_state.stock_rec[item_name] -= quantity
-                            update_stock_rec(connection, st.session_state.stock_rec)
-                            st.success(f"Added {quantity} x {item_name}!")
-                            st.rerun()
-                            
-                        else :
-                           st.error("Not selected. Try Again!")
-                    
-                    
+            
+            
+            item_options = df_coffee.set_index('ItemNo')['Name'].to_dict()
+            selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
+            item_name = item_options[selected_item_no]
+            max_stock = st.session_state.stock_rec.get(item_name, 0)
+            quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0,key="coffee_qty")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                submitted = st.button("Add Coffee Order")
+
+                if submitted:
+                    if quantity > 0:
+                        price = df_coffee[df_coffee['ItemNo'] == selected_item_no]['Price'].values[0]
+                        tax_cat = df_coffee[df_coffee['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
+                        idx = len(st.session_state.order_menu)
+                        st.session_state.order_menu[idx] = [item_name, quantity, price]
+                        st.session_state.tax_lis[item_name] = tax_cat
+                        st.session_state.stock_rec[item_name] -= quantity
+                        update_stock_rec(connection, st.session_state.stock_rec)
+                        st.success(f"Added {quantity} x {item_name}!")
+                        st.rerun()
+                    else:
+                        st.error("Please select a quantity greater than 0.")
+
+                   
         else:
             st.warning("No coffee items available.")
 
@@ -706,23 +801,23 @@ if portal == "Public (Order)":
         df_tea = fetch_tea_df(connection)
         if not df_tea.empty:
             st.dataframe(df_tea[['ItemNo', 'Name', 'Price']])
-            with st.form("tea_order"):
-                item_options = df_tea.set_index('ItemNo')['Name'].to_dict()
-                selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
-                item_name = item_options[selected_item_no]
-                max_stock = st.session_state.stock_rec.get(item_name, 0)
-                quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0)
-                submitted = st.form_submit_button("Add to Order")
-                if submitted and quantity > 0:
-                    price = df_tea[df_tea['ItemNo'] == selected_item_no]['Price'].values[0]
-                    tax_cat = df_tea[df_tea['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
-                    idx = len(st.session_state.order_menu)
-                    st.session_state.order_menu[idx] = [item_name, quantity, price]
-                    st.session_state.tax_lis[item_name] = tax_cat
-                    st.session_state.stock_rec[item_name] -= quantity
-                    update_stock_rec(connection, st.session_state.stock_rec)
-                    st.success(f"Added {quantity} x {item_name}!")
-                    st.rerun()
+            
+            item_options = df_tea.set_index('ItemNo')['Name'].to_dict()
+            selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
+            item_name = item_options[selected_item_no]
+            max_stock = st.session_state.stock_rec.get(item_name, 0)
+            quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0,key="tea_qty")
+            submitted = st.button("Add Tea Order")
+            if submitted and quantity > 0:
+                price = df_tea[df_tea['ItemNo'] == selected_item_no]['Price'].values[0]
+                tax_cat = df_tea[df_tea['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
+                idx = len(st.session_state.order_menu)
+                st.session_state.order_menu[idx] = [item_name, quantity, price]
+                st.session_state.tax_lis[item_name] = tax_cat
+                st.session_state.stock_rec[item_name] -= quantity
+                update_stock_rec(connection, st.session_state.stock_rec)
+                st.success(f"Added {quantity} x {item_name}!")
+                st.rerun()
         else:
             st.warning("No tea items available.")
 
@@ -732,48 +827,49 @@ if portal == "Public (Order)":
         df_chat = fetch_chat_df(connection, category)
         if not df_chat.empty:
             st.dataframe(df_chat[['ItemNo', 'Name', 'Price']])
-            with st.form("chat_order"):
-                item_options = df_chat.set_index('ItemNo')['Name'].to_dict()
-                selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
-                item_name = item_options[selected_item_no]
-                max_stock = st.session_state.stock_rec.get(item_name, 0)
-                quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0)
-                submitted = st.form_submit_button("Add to Order")
-                if submitted and quantity > 0:
-                    price = df_chat[df_chat['ItemNo'] == selected_item_no]['Price'].values[0]
-                    tax_cat = df_chat[df_chat['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
-                    idx = len(st.session_state.order_menu)
-                    st.session_state.order_menu[idx] = [item_name, quantity, price]
-                    st.session_state.tax_lis[item_name] = tax_cat
-                    st.session_state.stock_rec[item_name] -= quantity
-                    update_stock_rec(connection, st.session_state.stock_rec)
-                    st.success(f"Added {quantity} x {item_name}!")
-                    st.rerun()
+            
+            item_options = df_chat.set_index('ItemNo')['Name'].to_dict()
+            selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
+            item_name = item_options[selected_item_no]
+            max_stock = st.session_state.stock_rec.get(item_name, 0)
+            quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0,key="chat_qty")
+            submitted = st.button("Add Chat Order")
+            if submitted and quantity > 0:
+                price = df_chat[df_chat['ItemNo'] == selected_item_no]['Price'].values[0]
+                tax_cat = df_chat[df_chat['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
+                idx = len(st.session_state.order_menu)
+                st.session_state.order_menu[idx] = [item_name, quantity, price]
+                st.session_state.tax_lis[item_name] = tax_cat
+                st.session_state.stock_rec[item_name] -= quantity
+                update_stock_rec(connection, st.session_state.stock_rec)
+                st.success(f"Added {quantity} x {item_name}!")
+                st.rerun()
         else:
             st.warning(f"No chat items available for {category}.")
 
     with tab4:  # Special
         st.subheader("🥂 Special Menu")
+        
         df_spl = fetch_spl_df(connection)
         if not df_spl.empty:
             st.dataframe(df_spl[['ItemNo', 'Name', 'Price']])
-            with st.form("spl_order"):
-                item_options = df_spl.set_index('ItemNo')['Name'].to_dict()
-                selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
-                item_name = item_options[selected_item_no]
-                max_stock = st.session_state.stock_rec.get(item_name, 0)
-                quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0)
-                submitted = st.form_submit_button("Add to Order")
-                if submitted and quantity > 0:
-                    price = df_spl[df_spl['ItemNo'] == selected_item_no]['Price'].values[0]
-                    tax_cat = df_spl[df_spl['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
-                    idx = len(st.session_state.order_menu)
-                    st.session_state.order_menu[idx] = [item_name, quantity, price]
-                    st.session_state.tax_lis[item_name] = tax_cat
-                    st.session_state.stock_rec[item_name] -= quantity
-                    update_stock_rec(connection, st.session_state.stock_rec)
-                    st.success(f"Added {quantity} x {item_name}!")
-                    st.rerun()
+            
+            item_options = df_spl.set_index('ItemNo')['Name'].to_dict()
+            selected_item_no = st.selectbox("Choose Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
+            item_name = item_options[selected_item_no]
+            max_stock = st.session_state.stock_rec.get(item_name, 0)
+            quantity = st.number_input(f"Quantity (Max: {max_stock})", min_value=0, max_value=max_stock, value=0,key="snack_qty")
+            submitted = st.button("Add Snack Order")
+            if submitted and quantity > 0:
+                price = df_spl[df_spl['ItemNo'] == selected_item_no]['Price'].values[0]
+                tax_cat = df_spl[df_spl['ItemNo'] == selected_item_no]['TaxCategory'].values[0]
+                idx = len(st.session_state.order_menu)
+                st.session_state.order_menu[idx] = [item_name, quantity, price]
+                st.session_state.tax_lis[item_name] = tax_cat
+                st.session_state.stock_rec[item_name] -= quantity
+                update_stock_rec(connection, st.session_state.stock_rec)
+                st.success(f"Added {quantity} x {item_name}!")
+                st.rerun()
         else:
             st.warning("Special menu unavailable (only 5-7 PM).")
 
@@ -783,10 +879,13 @@ if portal == "Public (Order)":
             order_df = pd.DataFrame.from_dict(st.session_state.order_menu, orient='index', columns=['Item', 'Qty', 'Unit Price'])
             order_df['Total'] = order_df['Qty'].astype(int) * order_df['Unit Price']
             st.dataframe(order_df)
-            col1, col2 = st.columns(2)
+            col1, col2, col3 = st.columns(3)
             with col1:
                 cancel_idx = st.selectbox("Cancel Item #", options=list(st.session_state.order_menu.keys()))
+                item_name = order_df.loc[cancel_idx, 'Item']
             with col2:
+                st.text_input("Cancel Item",item_name)
+            with col3:
                 cancel_qty = st.number_input("Cancel Qty (partial for full)", min_value=1, max_value=order_df.loc[cancel_idx, 'Qty'])
             if st.button("Cancel"):
                 item_name = order_df.loc[cancel_idx, 'Item']
@@ -1011,37 +1110,53 @@ elif portal == "Corporate (Admin)":
         if st.button("Generate Chart"):
             if category == "Coffee":
                 fig = coffee_sales_fig(connection, period)
+                df = coffee_sales_data(connection, period)
                 if fig:
                     st.pyplot(fig)
                 else:
                     st.info("No coffee sales data.")
+                st.subheader(f"{period}- Sales Data")
+                st.dataframe(df)
             elif category == "Tea":
                 fig = tea_sales_fig(connection, period)
+                df = tea_sales_data(connection, period)
                 if fig:
                     st.pyplot(fig)
                 else:
                     st.info("No tea sales data.")
+                st.subheader(f"{period}- Sales Data")
+                st.dataframe(df)
             elif category == "Chat":
                 fig = chat_sales_fig(connection, period)
+                df = chat_sales_data(connection, period)
                 if fig:
                     st.pyplot(fig)
                 else:
                     st.info("No chat sales data.")
+                st.subheader(f"{period}- Sales Data")
+                st.dataframe(df)
             elif category == "Spl":
                 fig = Spl_sales_fig(connection, period)
+                df = Spl_sales_data(connection, period)
                 if fig:
                     st.pyplot(fig)
                 else:
                     st.info("No snacks sales data.")
+                st.subheader(f"{period}- Sales Data")
+                st.dataframe(df)
             else:
                 fig = overall_sales_fig(connection, period)
+                df = overall_sales_data(connection, period)
                 if fig:
                     st.pyplot(fig)
                 else:
                     st.info("No sales data.")
+                st.subheader(f"{period}- Sales Data")
+                st.dataframe(df)
                 #st.warning(f"Graph for {category} not implemented yet. Add similar to coffee_sales_fig.")
-        st.subheader("Excel Reports")
-        st.info("Add your excel_data_prep.py functions here with st.download_button (e.g., Total_Coffee_Sales).")
+        
+        #st.dataFrame(df)
+        #st.info("Add your excel_data_prep.py functions here with st.download_button (e.g., Total_Coffee_Sales).")
 
     with tab_admin3:
         st.subheader("Dynamic Reports")
@@ -1379,7 +1494,11 @@ elif portal == "Corporate (Admin)":
                 if f"order_{column}" not in st.session_state:
                     st.session_state[f"order_{column}"] = False
 
-               
+            if st.button("Clear Data"):
+                reset_state()
+                for column in field_options:
+                    st.session_state[f"selected_{column}"] = False
+                    
             for column in field_options:
                 selected_fields[column] = st.checkbox(column,key=f"selected_{column}")
 
