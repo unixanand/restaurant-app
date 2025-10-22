@@ -6,7 +6,7 @@ import matplotlib
 from datetime import datetime, timedelta, date
 import time
 import pytz
-import psycopg2
+import psycopg
 import os
 import re
 from dotenv import load_dotenv
@@ -40,7 +40,7 @@ def get_connection():
         st.error("Missing DB environment variables: DB_HOST, DB_NAME, DB_USER, DB_PASSWORD")
         return None
     try:
-        connection = psycopg2.connect(
+        connection = psycopg.connect(
             host=host,
             port=port,
             dbname=dbname,
