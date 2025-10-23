@@ -28,6 +28,7 @@ os.makedirs(REPORTS_DIR, exist_ok=True)
 
 load_dotenv()  # Load environment variables from .env file
 
+@st.cache_resource
 def get_connection():
     """Load DB credentials from environment variables and connect to PostgreSQL."""
     host = os.environ.get('DB_HOST')
@@ -46,7 +47,8 @@ def get_connection():
             dbname=dbname,
             user=user,
             password=password,
-            sslmode='require'  # For Supabase/SSL-enabled PG
+            sslmode='require', # For Supabase/SSL-enabled PG
+            prepare_threshold=None 
         )
         st.success("Connected to PostgreSQL Database!")
         return connection
