@@ -134,7 +134,7 @@ def update_tax_amt(connection,tax_category,tax_amount) :
     try:
         cursor.execute(upd_qry,{"amt" : amt, "category" : category})
         connection.commit()
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         st.error(f"DB Update Error: {e}")
     cursor.close()
 
@@ -149,7 +149,7 @@ def insert_db_data(connection, tmp_lis):
     try:
         cursor.executemany(insert_sales_rec, ins_rec)
         connection.commit()
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         st.error(f"DB Insert Error: {e}")
     cursor.close()
 
@@ -524,7 +524,7 @@ def validate_item(connection, item):
             return 0
         logging.info(f"Validated item: {item}")
         return 1
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         logging.error(f"DB Fetch Error for item {item}: {e}")
         st.error(f"DB Fetch Error: {e}")
         return 0
@@ -560,7 +560,7 @@ def get_item_stock(connection, item,qty) :
         upd_qry = "UPDATE STOCK_MAINTENANCE_TXN_TBL SET avail_stock = %(avail_stock)s WHERE item_name = %(item)s AND value_date = CURRENT_DATE"
         try:
             cursor.execute(upd_qry, {"item" : item, "avail_stock" : avail_stock})
-        except psycopg2.Error as e:
+        except psycopg.Error as e:
             st.error(f"DB Update Error: {e}")
         connection.commit()
         cursor.close()
@@ -573,7 +573,7 @@ def get_item_stock(connection, item,qty) :
         try:
             upd_qry = "UPDATE STOCK_MAINTENANCE_TXN_TBL SET avail_stock = 0 WHERE item_name = %(item)s AND value_date = CURRENT_DATE"
             cursor.execute(upd_qry, {"item" : item})
-        except psycopg2.Error as e:
+        except psycopg.Error as e:
             st.error(f"DB Update Error: {e}")
         connection.commit()
         cursor.close() 
@@ -596,7 +596,7 @@ def insert_log(connection, file, message):
         try:
             cursor.execute(ins_qry, {"2": file, "3": message})
             logging.info(f"Logged: {message} for file {file}")
-        except psycopg2.Error as e:
+        except psycopg.Error as e:
             logging.error(f"DB Insert Error: {e}")
             return
         connection.commit()
@@ -640,7 +640,7 @@ def get_item_price(connection,item,qty) :
     sel_qry = "SELECT price, tax_category FROM BULK_ORDER_TBL WHERE item_name = %(itm)s"
     try :
         cursor.execute(sel_qry,{"itm" :item})
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         st.error(f"DB Fetch Error: {e}")
     row = cursor.fetchone()
     price = 0
