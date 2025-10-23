@@ -871,7 +871,9 @@ if portal == "Public (Order)":
     with tab_bill:
         st.subheader("💰 Generate Bill")
         if st.session_state.order_menu:
-            order_df = pd.DataFrame.from_dict(st.session_state.order_menu, orient='index', columns=['Item', 'Qty', 'Unit Price'])
+            # Fixed: Use columns for data only (Qty, Unit Price); promote index to Item column
+            order_df = pd.DataFrame.from_dict(st.session_state.order_menu, orient='index', columns=['Qty', 'Unit Price'])
+            order_df = order_df.reset_index(names='Item')  # Now Item is a proper column
             order_df = order_df.groupby(['Item', 'Unit Price'])['Qty'].sum().reset_index()
             order_df['Total'] = order_df['Qty'].astype(int) * order_df['Unit Price']
             subtotal = order_df['Total'].sum()
@@ -900,12 +902,16 @@ if portal == "Public (Order)":
             col2.metric("Tax Amount", f"Rs.{tax_amt:.2f}")
             col3.metric("CGST", f"Rs.{cgst:.2f}")
             col4.metric("SGST", f"Rs.{sgst:.2f}")
-            col5.metric("Max Apllied GST", f"{gst}%")
+            col5.metric("Max Applied GST", f"{gst}%")
             st.metric("**Total Bill**", f"Rs.{total_bill:.2f}")
-            #fig_pie, ax = plt.subplots()
-            #order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
-            #ax.set_title('Bill Breakdown')
-            #st.pyplot(fig_pie)
+    
+            # Uncomment for pie chart (now safe with numeric Total)
+            # import matplotlib.pyplot as plt
+            fig_pie, ax = plt.subplots()
+            order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
+            ax.set_title('Bill Breakdown')
+            st.pyplot(fig_pie)
+    
             if st.button("Confirm & Insert Sales to DB"):
                 tmp_lis = order_df[['Item', 'Qty', 'Total']].values.tolist()
                 insert_db_data(connection, tmp_lis)
