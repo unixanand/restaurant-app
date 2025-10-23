@@ -889,7 +889,7 @@ if portal == "Public (Order)":
             gst *= 100
             cgst = tax_amt / 2
             sgst = cgst
-            total_bill = subtotal + tax_amt
+            total_bill = float(subtotal) + float(tax_amt)
 
             st.write("**💳 Bill Statement**")
             ist = pytz.timezone("Asia/Kolkata")
