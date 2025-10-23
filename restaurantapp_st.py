@@ -884,7 +884,7 @@ if portal == "Public (Order)":
                 tax_cat = tax_lis.get(item, 'Standard')
                 tax_rate = st.session_state.tax_data.get(tax_cat, 0.0)
                 tax_set.add(tax_rate)
-                tax_amt += row['Total'] * tax_rate
+                tax_amt += float(row['Total']) * float(tax_rate)
             gst = max(tax_set) if tax_set else 0.0
             gst *= 100
             cgst = tax_amt / 2
