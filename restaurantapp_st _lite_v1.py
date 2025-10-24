@@ -903,10 +903,18 @@ if portal == "Public (Order)":
             col4.metric("SGST", f"Rs.{sgst:.2f}")
             col5.metric("Max Apllied GST", f"{gst}%")
             st.metric("**Total Bill**", f"Rs.{total_bill:.2f}")
-            fig_pie, ax = plt.subplots()
-            order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
-            ax.set_title('Bill Breakdown')
-            st.pyplot(fig_pie)
+            order_df['Total'] = pd.to_numeric(order_df['Total'], errors='coerce')
+            order_df = order_df.dropna(subset=['Total']).query('Total > 0')
+            if len(order_df) > 0:
+                fig_pie, ax = plt.subplots(figsize=(8, 6))
+                order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%', startangle=90)
+                ax.set_title('Bill Breakdown')
+                ax.set_ylabel('')  # Remove y-label for cleaner pie
+                st.pyplot(fig_pie)
+            #fig_pie, ax = plt.subplots()
+            #order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
+            #ax.set_title('Bill Breakdown')
+            #st.pyplot(fig_pie)
             if st.button("Confirm & Insert Sales to DB"):
                 tmp_lis = order_df[['Item', 'Qty', 'Total']].values.tolist()
                 insert_db_data(connection, tmp_lis)
