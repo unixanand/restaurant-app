@@ -904,7 +904,7 @@ if portal == "Public (Order)":
             col5.metric("Max Apllied GST", f"{gst}%")
             st.metric("**Total Bill**", f"Rs.{total_bill:.2f}")
             fig_pie, ax = plt.subplots()
-            order_df.plot(kind='pie', y=order_df['Total'], labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
+            order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
             ax.set_title('Bill Breakdown')
             st.pyplot(fig_pie)
             if st.button("Confirm & Insert Sales to DB"):
