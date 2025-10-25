@@ -1067,7 +1067,19 @@ elif portal == "Corporate (Admin)":
             if not df_items.empty:
                 item_options = df_items.set_index('ItemNo')['Name'].to_dict()
                 item_no = st.selectbox("Select Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
-                new_price = st.number_input("New Price", min_value=0.0, value=df_items[df_items['ItemNo'] == item_no]['Price'].values[0])
+                matching_row = df_items[df_items['ItemNo'] == item_no]
+                if st.form_submit_button("Show Price"):
+                    if not matching_row.empty:
+                        current_price = float(matching_row['Price'].values[0])  # Convert Decimal to float
+                    else:
+                        current_price = 0.0  # Fallback
+                    matching_row = df_items[df_items['ItemNo'] == item_no]
+                    if not matching_row.empty:
+                        current_price = float(matching_row['Price'].values[0])  # Convert Decimal to float
+                    else:
+                        current_price = 0.0  # Fallback
+                    new_price = st.number_input("New Price", min_value=0.0, value=current_price)
+                
                 submitted = st.form_submit_button("Update Price")
                 if submitted:
                     cursor = connection.cursor()
