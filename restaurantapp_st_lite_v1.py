@@ -709,7 +709,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 # Sidebar for Portal Selection
-portal = st.sidebar.selectbox("Select Portal", ["Public (Order)"])
+portal = st.sidebar.selectbox("Select Portal", ["Public (Order)","Corporate (Admin)"])
 if st.sidebar.button("Logout"):
     st.session_state.clear()
     st.rerun()
@@ -846,8 +846,8 @@ if portal == "Public (Order)":
                 cancel_qty = st.number_input("Cancel Qty (partial for full)", min_value=1, max_value=order_df.loc[cancel_idx, 'Qty'])
             if st.button("Cancel"):
                 item_name = order_df.loc[cancel_idx, 'Item']
-                if cancel_qty == 0:
-                    cancel_qty = order_df.loc[cancel_idx, 'Qty']
+                #if cancel_qty != 0:
+                    #cancel_qty = order_df.loc[cancel_idx, 'Qty']
                     
                 st.session_state.stock_rec[item_name] += cancel_qty
                 if cancel_qty == order_df.loc[cancel_idx, 'Qty']:
@@ -903,6 +903,14 @@ if portal == "Public (Order)":
             col4.metric("SGST", f"Rs.{sgst:.2f}")
             col5.metric("Max Apllied GST", f"{gst}%")
             st.metric("**Total Bill**", f"Rs.{total_bill:.2f}")
+            order_df['Total'] = pd.to_numeric(order_df['Total'], errors='coerce')
+            order_df = order_df.dropna(subset=['Total']).query('Total > 0')
+            if len(order_df) > 0:
+                fig_pie, ax = plt.subplots(figsize=(8, 6))
+                order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%', startangle=90)
+                ax.set_title('Bill Breakdown')
+                ax.set_ylabel('')  # Remove y-label for cleaner pie
+                st.pyplot(fig_pie)
             #fig_pie, ax = plt.subplots()
             #order_df.plot(kind='pie', y='Total', labels=order_df['Item'], ax=ax, autopct='%1.1f%%')
             #ax.set_title('Bill Breakdown')
@@ -916,6 +924,150 @@ if portal == "Public (Order)":
                 st.rerun()
         else:
             st.warning("No items in cart.")
+
+# --- Corporate Portal ---
+elif portal == "Corporate (Admin)":
+    user_file = "./Files/user_list.txt"
+    if os.path.exists(user_file):
+        with open(user_file, "r") as f:
+            allowed = set(line.strip() for line in f)
+    else:
+        allowed = set()  # Or default users
+    username = st.sidebar.text_input("Enter Username for Admin", type="password")
+    st.sidebar.button("Ok")
+    if username not in allowed:
+        st.warning("Invalid user - Corporate access denied!")
+        st.stop()
+    st.sidebar.success(f"Welcome, Admin User!")
+    st.header("⚙️ Corporate Portal: Admin Dashboard")
+    tab_admin1, tab_admin2, tab_admin3,tab_admin4 = st.tabs(["Maintenance", "Graphs & Reports", "Dynamic Reports", "Bulk Orders"])
+    with tab_admin1:
+        st.subheader("1. View Current Stock")
+        if st.button("Refresh & Show Stock"):
+            st.session_state.stock_rec = get_stock_data(connection)
+            df_stock = pd.DataFrame(list(st.session_state.stock_rec.items()), columns=['Item', 'Available Stock'])
+            st.dataframe(df_stock)
+
+        st.subheader("2. Load Shortage Stocks")
+        if st.button("Get Shortage Stock"):
+            st.session_state.stock_rec = get_shortage_stock_data(connection)
+            df_stock = pd.DataFrame(list(st.session_state.stock_rec.items()), columns=['Item', 'Available Stock'])
+            st.dataframe(df_stock)
+            
+        if st.button("Load Stock"):
+            load_shortage_stock_data(connection)
+        st.subheader("3. Item Addition/Deletion")
+        category = st.selectbox("Category", ["Coffee", "Tea", "Chat", "Spl"])
+        action = st.selectbox("Action", ["Add", "Delete"])
+        with st.form("item_add_del"):
+            if action != 'Delete' :
+                item_name = st.text_input("Item Name")
+            else : 
+                if category == 'Coffee':
+                    df_items = fetch_coffee_df(connection)
+                elif category == 'Tea':
+                    df_items = fetch_tea_df(connection)
+                elif category == 'Chat':
+                    category = 'Both'
+                    df_items = fetch_chat_df(connection, category)
+                elif category == 'Spl':
+                    df_items = fetch_snack_df(connection)
+                item_options = df_items.set_index('ItemNo')['Name'].to_dict()
+                item_no = st.selectbox("Select Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
+                item_name = item_options[item_no]
+            if action != 'Delete' :
+                price = st.number_input("Price (for Add)", min_value=0.0, value=0.0)
+            if action != 'Delete' :
+                if category == "Chat"  :
+                    item_category = st.text_input("Enter VEG / NV")
+            if action != 'Delete' :
+                tax_slab = st.text_input("Tax Tier (TIER2/3)")
+            submitted = st.form_submit_button(f"{action} Item")
+            if submitted:
+                cursor = connection.cursor()
+                if action == "Add":
+                    if category == "Coffee":
+                        ins_stmt = "INSERT INTO coffee_menu_tbl(coffee_name, price, tax_category) VALUES (%s, %s, %s)"
+                        cursor.execute(ins_stmt, (item_name, price, tax_slab))
+                    elif category == "Tea":
+                        ins_stmt = "INSERT INTO tea_menu_tbl(tea_name, price, tax_category) VALUES (%s, %s, %s)"
+                        cursor.execute(ins_stmt, (item_name, price, tax_slab))
+                    elif category == "Chat":
+                        ins_stmt = "INSERT INTO chat_menu_tbl(chat_name, price, tax_category, category) VALUES (%s, %s, %s, %s)"
+                        cursor.execute(ins_stmt, (item_name, price, tax_slab, item_category))
+                    else:
+                        ins_stmt = "INSERT INTO special_snacks_tbl(item_name, price, tax_category) VALUES (%s, %s, %s)"
+                        cursor.execute(ins_stmt, (item_name, price, tax_slab))
+                else:  # Delete
+                    if category == "Coffee":
+                        del_stmt = "UPDATE coffee_menu_tbl SET delete_flag='Y' WHERE coffee_name = %s"
+                        cursor.execute(del_stmt, (item_name,))
+                    elif category == "Tea":
+                        del_stmt = "UPDATE tea_menu_tbl SET delete_flag='Y' WHERE tea_name = %s"
+                        cursor.execute(del_stmt, (item_name,))
+                    elif category == "Chat":
+                        del_stmt = "UPDATE chat_menu_tbl SET delete_flag='Y' WHERE chat_name = %s"
+                        cursor.execute(del_stmt, (item_name,))
+                    else:
+                        del_stmt = "UPDATE special_snacks_tbl SET delete_flag='Y' WHERE item_name = %s"
+                        cursor.execute(del_stmt, (item_name,))
+                connection.commit()
+                cursor.close()
+                st.success(f"{action}ed {item_name} in {category}!")
+                st.rerun()
+        st.subheader("4. Update Item Prices")
+        category_price = st.selectbox("Category for Price Update", ["Coffee", "Tea", "Chat", "Spl"], key="price_cat")
+        with st.form("price_update"):
+            if category_price == "Coffee":
+                df_items = fetch_coffee_df(connection)
+            elif category_price == "Tea":
+                df_items = fetch_tea_df(connection)
+            elif category_price == "Chat":
+                df_items = fetch_chat_df(connection, "Both")
+            else:
+                df_items = fetch_snack_df(connection)
+            if not df_items.empty:
+                item_options = df_items.set_index('ItemNo')['Name'].to_dict()
+                item_no = st.selectbox("Select Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
+                matching_row = df_items[df_items['ItemNo'] == item_no]
+                if st.form_submit_button("Show Price"):
+                    if not matching_row.empty:
+                        current_price = float(matching_row['Price'].values[0])  # Convert Decimal to float
+                    else:
+                        current_price = 0.0  # Fallback
+                    matching_row = df_items[df_items['ItemNo'] == item_no]
+                    if not matching_row.empty:
+                        current_price = float(matching_row['Price'].values[0])  # Convert Decimal to float
+                    else:
+                        current_price = 0.0  # Fallback
+                    new_price = st.number_input("New Price", min_value=0.0, value=current_price)
+                
+                submitted = st.form_submit_button("Update Price")
+    
+                
+    
+                if submitted:
+                    cursor = connection.cursor()
+                    item_name = item_options[item_no]
+                    if category_price == "Coffee":
+                        upd_stmt = "UPDATE coffee_menu_tbl SET price = %s WHERE coffee_name = %s"
+                        cursor.execute(upd_stmt, (new_price, item_name))
+                    elif category_price == "Tea":
+                        upd_stmt = "UPDATE tea_menu_tbl SET price = %s WHERE tea_name = %s"
+                        cursor.execute(upd_stmt, (new_price, item_name))
+                    elif category_price == "Chat":
+                        upd_stmt = "UPDATE chat_menu_tbl SET price = %s WHERE chat_name = %s"
+                        cursor.execute(upd_stmt, (new_price, item_name))
+                    else:
+                        upd_stmt = "UPDATE special_snacks_tbl SET price = %s WHERE item_name = %s"
+                        cursor.execute(upd_stmt, (new_price, item_name))
+                    connection.commit()
+                    cursor.close()
+                    st.success(f"Updated price for {item_name} to Rs.{new_price:.2f}!")
+                    st.rerun()
+            else:
+                st.warning(f"No items in {category_price}.")
+
 
 
 # Footer
