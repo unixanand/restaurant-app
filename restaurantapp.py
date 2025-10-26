@@ -889,8 +889,8 @@ if portal == "Public (Order)":
                 cancel_qty = st.number_input("Cancel Qty (partial for full)", min_value=1, max_value=order_df.loc[cancel_idx, 'Qty'])
             if st.button("Cancel"):
                 item_name = order_df.loc[cancel_idx, 'Item']
-                if cancel_qty == 0:
-                    cancel_qty = order_df.loc[cancel_idx, 'Qty']
+                #if cancel_qty == 0:
+                    #cancel_qty = order_df.loc[cancel_idx, 'Qty']
                     
                 st.session_state.stock_rec[item_name] += cancel_qty
                 if cancel_qty == order_df.loc[cancel_idx, 'Qty']:
@@ -1573,13 +1573,16 @@ elif portal == "Corporate (Admin)":
             for i in range(len(query_fields)) :
                 if query_fields[i] not in agg_fields :
                     order_option.append(query_fields[i])
+                    
 
             for field in order_option:
                 order_fields[field] = st.checkbox(field, key=f"order_{field}")
+                
 
             for field in order_option:
                 if order_fields[field] :
-                    order_flds.append(order_fields[field])
+                    #order_flds.append(order_fields[field])
+                    order_flds.append(field)
             
             
             for i in range(len(order_flds)) :
@@ -1606,7 +1609,10 @@ elif portal == "Corporate (Admin)":
                 
             #st.write(qry_str)
             #st.write(column_names)
-            
+            sql_qry = qry_str
+            if(st.button('show Query')):
+                with st.expander("View Generated SQL Query", expanded=True):
+                    st.code(sql_qry, language="sql")  
             
             if st.button(f"Generate {item_option} Sales Xcel Report"):
                 sales_rec = execute_qry(connection, qry_str,column_names)
