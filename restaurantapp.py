@@ -36,6 +36,13 @@ os.makedirs(REPORTS_DIR, exist_ok=True)
 
 load_dotenv()  # Load environment variables from .env file
 
+SMTP_HOST = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', 587))
+EMAIL_USER = os.environ.get('EMAIL_USER')
+EMAIL_PASS = os.environ.get('EMAIL_PASS')
+ALERT_RECIPIENT = os.environ.get('ALERT_RECIPIENT', EMAIL_USER)  # Default to sender
+SEND_ALERTS = os.environ.get('SEND_ALERTS', 'true').lower() == 'true'
+
 def get_connection():
     """Load DB credentials from environment variables and connect to Oracle."""
     user = os.environ.get('DB_USER')
