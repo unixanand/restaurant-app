@@ -16,6 +16,10 @@ import logging
 from streamlit.web import cli as stcli
 import sys
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 #oracledb.init_oracle_client(thick=False)
 
@@ -706,6 +710,59 @@ def get_item_price(connection,item,qty) :
 
 ##
 
+def send_stock_alert(connection, item_name, new_stock):
+    """Send email alert if stock is low/zero."""
+    if new_stock > 0:  # Customize threshold here (e.g., > 5)
+        return  # No alert needed
+    
+    # Check for recent alert (simple DB flag to avoid spam; add column if needed)
+    cursor = connection.cursor()
+    cursor.execute("SELECT 1 FROM stock_alerts WHERE item_name = %s AND alert_date = CURRENT_DATE", (item_name,))
+    if cursor.fetchone():
+        cursor.close()
+        return  # Already alerted today
+    cursor.close()
+    
+    # Email setup
+    msg = MIMEMultipart('alternative')
+    msg['From'] = EMAIL_USER
+    msg['To'] = ALERT_RECIPIENT
+    msg['Subject'] = f"🚨 Stock Shortage Alert: {item_name} Out of Stock!"
+    
+    html_body = f"""
+    <html>
+    <body>
+        <h2>Stock Alert for {item_name}</h2>
+        <p>Current stock level: <strong>{new_stock}</strong></p>
+        <p>Date: {datetime.now(pytz.timezone("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")}</p>
+        <p>Action needed: Replenish immediately to avoid order issues.</p>
+        <p>Dashboard: <a href="https://restaurant-app-anand.streamlit.app/">View Now</a></p>
+    </body>
+    </html>
+    """
+    msg.attach(MIMEText(html_body, 'html'))
+    
+    try:
+        if SEND_ALERTS:
+            server = smtplib.SMTP(SMTP_HOST, SMTP_PORT)
+            server.starttls()
+            server.login(EMAIL_USER, EMAIL_PASS)
+            text = server.send_message(msg)
+            server.quit()
+            st.success(f"Alert sent for {item_name}!")
+        else:
+            st.info(f"Demo: Would send alert for {item_name} (stock: {new_stock})")
+        
+        # Log to DB (create table if needed: CREATE TABLE stock_alerts (item_name VARCHAR, alert_date DATE);)
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO stock_alerts (item_name, alert_date) VALUES (%s, CURRENT_DATE)", (item_name,))
+        connection.commit()
+        cursor.close()
+    except Exception as e:
+        st.error(f"Email alert failed: {e}")
+        logging.error(f"Stock alert error for {item_name}: {e}")
+
+
 # --- Initialize Session State ---
 
 if 'initialized' not in st.session_state:
@@ -788,6 +845,8 @@ if portal == "Public (Order)":
                         st.session_state.stock_rec[item_name] -= quantity
                         update_stock_rec(connection, st.session_state.stock_rec)
                         st.success(f"Added {quantity} x {item_name}!")
+                        if st.session_state.stock_rec[item_name] <= 0:
+                            send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
                         st.rerun()
                     else:
                         st.error("Please select a quantity greater than 0.")
@@ -817,6 +876,8 @@ if portal == "Public (Order)":
                 st.session_state.stock_rec[item_name] -= quantity
                 update_stock_rec(connection, st.session_state.stock_rec)
                 st.success(f"Added {quantity} x {item_name}!")
+                if st.session_state.stock_rec[item_name] <= 0:
+                    send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
                 st.rerun()
         else:
             st.warning("No tea items available.")
@@ -843,6 +904,8 @@ if portal == "Public (Order)":
                 st.session_state.stock_rec[item_name] -= quantity
                 update_stock_rec(connection, st.session_state.stock_rec)
                 st.success(f"Added {quantity} x {item_name}!")
+                if st.session_state.stock_rec[item_name] <= 0:
+                    send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
                 st.rerun()
         else:
             st.warning(f"No chat items available for {category}.")
@@ -869,6 +932,8 @@ if portal == "Public (Order)":
                 st.session_state.stock_rec[item_name] -= quantity
                 update_stock_rec(connection, st.session_state.stock_rec)
                 st.success(f"Added {quantity} x {item_name}!")
+                if st.session_state.stock_rec[item_name] <= 0:
+                    send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
                 st.rerun()
         else:
             st.warning("Special menu unavailable (only 5-7 PM).")

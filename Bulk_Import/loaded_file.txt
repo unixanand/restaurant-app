@@ -1,5 +1,0 @@
-Log date: 2025-10-26
-Order file: UploadedFile(file_id='ec70d999-4452-4f23-9a36-fc494dc74e22', name='order_file4_26oct.xlsx', type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', size=9310, _file_urls=file_id: "ec70d999-4452-4f23-9a36-fc494dc74e22"
-upload_url: "/_stcore/upload_file/01495af6-b5ef-44b4-a52d-068bcb2dad15/ec70d999-4452-4f23-9a36-fc494dc74e22"
-delete_url: "/_stcore/upload_file/01495af6-b5ef-44b4-a52d-068bcb2dad15/ec70d999-4452-4f23-9a36-fc494dc74e22"
-)
