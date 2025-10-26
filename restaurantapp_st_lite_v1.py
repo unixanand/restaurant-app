@@ -1699,7 +1699,10 @@ elif portal == "Corporate (Admin)":
                     update_bulk_header(connection,file,status)
                     insert_db_data(connection, st.session_state.bulk_lis)
                     fig_pie, ax = plt.subplots()
+                    
+                    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
                     sales_by_item = df.groupby('Item Name')['Quantity'].sum()
+                    
                     
                     if len(sales_by_item) > 0 :
                         sales_by_item.plot(kind='pie', ax=ax, autopct='%1.1f%%', labels=sales_by_item.index)
