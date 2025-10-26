@@ -932,18 +932,26 @@ if portal == "Public (Order)":
 
 # --- Corporate Portal ---
 elif portal == "Corporate (Admin)":
+    st.error("""
+    🔒 **DEMO MODE WARNING**  
+    This is a **public demo** of the Admin Dashboard.  
+    - **Do NOT edit data** (e.g., stock, prices, taxes)—changes are simulated or may affect shared demo data.  
+    - View features only: Explore reports, graphs, and maintenance tools.  
+    - For real use, contact the developer or use a private instance.  
+    Questions? Check the GitHub repo: [unixanand/restaurant-app](https://github.com/unixanand/restaurant-app).
+    """)
     user_file = "./Files/user_list.txt"
     if os.path.exists(user_file):
         with open(user_file, "r") as f:
             allowed = set(line.strip() for line in f)
     else:
         allowed = set()  # Or default users
-    username = st.sidebar.text_input("Enter Username for Admin", type="password")
+    username = st.sidebar.text_input("Enter Username to login Admin Portal", type="password")
     st.sidebar.button("Ok")
-    if username not in allowed:
-        st.warning("Invalid user - Corporate access denied!")
-        st.stop()
-    st.sidebar.success(f"Welcome, Admin User!")
+    #if username not in allowed:
+        #st.warning("Invalid user - Corporate access denied!")
+        #st.stop()
+    st.sidebar.success(f"Welcome, {username}!")
     st.header("⚙️ Corporate Portal: Admin Dashboard")
     tab_admin1, tab_admin2, tab_admin3,tab_admin4 = st.tabs(["Maintenance", "Graphs & Reports", "Dynamic Reports", "Bulk Orders"])
     with tab_admin1:
