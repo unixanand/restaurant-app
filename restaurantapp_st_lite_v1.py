@@ -236,6 +236,7 @@ def coffee_sales_fig(connection, period):
     rows = cursor.fetchall()
     df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
     cursor.close()
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
         df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Coffee Sales ({period.capitalize()})')
@@ -278,6 +279,7 @@ def tea_sales_fig(connection, period='daily'):
     rows = cursor.fetchall()
     df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
     cursor.close()
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
         df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Tea Sales ({period.capitalize()})')
@@ -320,6 +322,7 @@ def chat_sales_fig(connection, period='daily'):
     rows = cursor.fetchall()
     df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
     cursor.close()
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
         df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Chat Sales ({period.capitalize()})')
@@ -362,6 +365,7 @@ def Spl_sales_fig(connection, period='daily'):
     rows = cursor.fetchall()
     df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
     cursor.close()
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
         df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Snacks Sales ({period.capitalize()})')
@@ -396,7 +400,7 @@ def pull_week_data(connection) :
 
     week_start_date = start_date.strftime("%d-%b-%Y").upper()
 
-    sel_qry1 = "SELECT SUBSTRING(TO_CHAR(value_date, 'DD-Day'),1,6) day, item_name, quantity, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
+    sel_qry1 = "SELECT SUBSTRING(REPLACE(TO_CHAR(value_date, 'DD Mon'), ' ', '-'), 1, 6) AS day, item_name, quantity, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
     sel_qry2 = "WHERE value_date >= %s GROUP BY value_date, item_name, quantity ORDER BY 1,2"
     final_qry = sel_qry1 + sel_qry2
 
@@ -416,7 +420,7 @@ def execute_qry(connection, qry_str,column_names) :
     return df
 
 def pull_month_data(connection):
-    path = os.path.join(FILES_DIR, "week_wise_sales.txt")
+    path = os.path.join(FILES_DIR, "pg_week_wise_sales.txt")
     with open(path, "r") as fp:
         qry = fp.read()
     cursor = connection.cursor()
@@ -428,7 +432,7 @@ def pull_month_data(connection):
 
 def get_month_data(connection) :
     item_lis = []
-    path = os.path.join(BASE_DIR, "Files", "week_wise_sales.txt")
+    path = os.path.join(BASE_DIR, "Files", "pg_week_wise_sales.txt")
     fp = open(path,"r")
     cursor = connection.cursor()
     qry = fp.read()
@@ -455,6 +459,7 @@ def overall_sales_fig(connection, period='daily'):
     rows = cursor.fetchall()
     df = pd.DataFrame(rows, columns=['Item', 'Quantity'])
     cursor.close()
+    df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
         df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'OverAll Sales ({period.capitalize()})')
@@ -493,13 +498,13 @@ def Week_sale_items(connection) :
     
     cursor = connection.cursor()
 
-    sel_qry1 = "SELECT SUBSTRING(TO_CHAR(value_date, 'DD-Mon'),1,6) day, 'Coffee' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
+    sel_qry1 = "SELECT SUBSTRING(REPLACE(TO_CHAR(value_date, 'DD Mon'), ' ', '-'), 1, 6) AS day, 'Coffee' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
     sel_qry2 = "WHERE value_date >= %s AND item_name IN (SELECT coffee_name FROM coffee_menu_tbl) GROUP BY value_date, item_name "
-    sel_qry3 = "UNION SELECT SUBSTRING(TO_CHAR(value_date, 'DD-Mon'),1,6) day, 'Tea' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
+    sel_qry3 = "UNION SELECT SUBSTRING(REPLACE(TO_CHAR(value_date, 'DD Mon'), ' ', '-'), 1, 6) AS day, 'Tea' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
     sel_qry4 = "WHERE value_date >= %s AND item_name IN (SELECT tea_name FROM tea_menu_tbl) GROUP BY value_date, item_name "
-    sel_qry5 = "UNION SELECT SUBSTRING(TO_CHAR(value_date, 'DD-Mon'),1,6) day, 'Chat' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
+    sel_qry5 = "UNION SELECT SUBSTRING(REPLACE(TO_CHAR(value_date, 'DD Mon'), ' ', '-'), 1, 6) AS day, 'Chat' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
     sel_qry6 = "WHERE value_date >= %s AND item_name IN (SELECT chat_name FROM chat_menu_tbl) GROUP BY value_date, item_name "
-    sel_qry7 = "UNION SELECT SUBSTRING(TO_CHAR(value_date, 'DD-Mon'),1,6) day, 'Snacks' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
+    sel_qry7 = "UNION SELECT SUBSTRING(REPLACE(TO_CHAR(value_date, 'DD Mon'), ' ', '-'), 1, 6) AS day, 'Snacks' item_name, SUM(sales_amt) tot_sales FROM sales_dtl_tbl "
     sel_qry8 = "WHERE value_date >= %s AND item_name IN (SELECT item_name FROM special_snacks_tbl) GROUP BY value_date, item_name"
     
     final_qry = sel_qry1 + sel_qry2 + sel_qry3 + sel_qry4 + sel_qry5 + sel_qry6 + sel_qry7 + sel_qry8
@@ -588,7 +593,7 @@ def insert_log(connection, file, message):
         logging.info("No file provided for logging")
         return
     cursor = connection.cursor()
-    sel_qry = "SELECT 1 FROM bulk_order_log_tbl WHERE value_date = CURRENT_DATE AND log_message = %(msg)s AND file_name = %(fil)s"
+    sel_qry = "SELECT 1 FROM bulk_order_log_tbl WHERE to_date(value_date,'YYYY-MM-DD') = CURRENT_DATE AND log_message = %(msg)s AND file_name = %(fil)s"
     cursor.execute(sel_qry, {"msg": message, "fil": file})
     row = cursor.fetchone()
     cursor.close()
@@ -1067,7 +1072,647 @@ elif portal == "Corporate (Admin)":
                     st.rerun()
             else:
                 st.warning(f"No items in {category_price}.")
+                
+        st.subheader("5. Show Tax Category")
+        if st.button("Get Tax Slabs"):
+            st.session_state.tax_rec = load_tax_data(connection)
+            df_tax = pd.DataFrame(list(st.session_state.tax_rec.items()), columns=['Tax Slab', 'Tax Amt'])
+            st.dataframe(df_tax)
+            
+        st.subheader("6. Update Tax Amount")
+        st.session_state.tax_rec = load_tax_data(connection)
+        df_tax = pd.DataFrame(list(st.session_state.tax_rec.items()), columns=['Tax Slab', 'Tax Amt'])
+        tax_category = st.selectbox("Select Tax Category", options=df_tax['Tax Slab'].unique())
+        tax_amount = st.text_input("Tax Amount", value=0.0)
+        if st.button("Update Tax Amount"):
+            update_tax_amt(connection,tax_category,tax_amount)
+            st.success("Tax Amount updated successfully!")
+            st.rerun()
+            
+    with tab_admin2:
+        st.subheader("Sales Graphs")
+        period = st.selectbox("Period", ["Daily", "Weekly", "Monthly"])
+        category = st.selectbox("Category", ["Coffee", "Tea", "Chat", "Spl", "Overall"])
+        if st.button("Generate Chart"):
+            if category == "Coffee":
+                fig = coffee_sales_fig(connection, period)
+                df = coffee_sales_data(connection, period)
+                if fig:
+                    st.pyplot(fig)
+                else:
+                    st.info("No coffee sales data.")
+                st.subheader(f"{period} Sales Data")
+                st.dataframe(df)
+            elif category == "Tea":
+                fig = tea_sales_fig(connection, period)
+                df = tea_sales_data(connection, period)
+                if fig:
+                    st.pyplot(fig)
+                else:
+                    st.info("No tea sales data.")
+                st.subheader(f"{period} Sales Data")
+                st.dataframe(df)
+            elif category == "Chat":
+                fig = chat_sales_fig(connection, period)
+                df = chat_sales_data(connection, period)
+                if fig:
+                    st.pyplot(fig)
+                else:
+                    st.info("No chat sales data.")
+                st.subheader(f"{period} Sales Data")
+                st.dataframe(df)
+            elif category == "Spl":
+                fig = Spl_sales_fig(connection, period)
+                df = Spl_sales_data(connection, period)
+                if fig:
+                    st.pyplot(fig)
+                else:
+                    st.info("No snacks sales data.")
+                st.subheader(f"{period} Sales Data")
+                st.dataframe(df)
+            else:
+                fig = overall_sales_fig(connection, period)
+                df = overall_sales_data(connection, period)
+                if fig:
+                    st.pyplot(fig)
+                else:
+                    st.info("No sales data.")
+                st.subheader(f"{period} Sales Data")
+                st.dataframe(df)
 
+    with tab_admin3:
+        st.subheader("Dynamic Reports")
+        tabG, tabW, tabM, tabA  = st.tabs(["Generic Report", "WeeklyReport", "Monthly Report", "Report as Your Choice"])
+        with tabG:
+            st.title("User Option")
+            user_choice = st.radio(
+                "Do you need to write excel into local dir? (Y/N)", 
+                 options=["Y", "N"],
+                index=None,  
+                key="excel_radio"  
+                )
+            report_choice = st.radio(
+                "Select Item for report generation", 
+                 options=["Coffee", "Tea", "Chat", "Snacks", "All"],
+                index=None,  
+                key="item_radio"  
+                )
+            date_start = st.date_input("Start Date")
+            date_end = st.date_input("End Date")
+            query = ""
+            if st.button("Generate Dynamic Report"):
+                if report_choice == "All" :
+                    rep_name="Overall"
+                    fp = open("./Files/pg_generic_sql.txt","r")
+                    query = fp.read()
+                    fp.close()
+                elif report_choice == "Coffee" :
+                    rep_name="Coffee"
+                    fp = open("./Files/pg_generic_coffee_sql.txt","r")
+                    query = fp.read()
+                    fp.close()
+                elif report_choice == "Tea" :
+                    rep_name="Tea"
+                    fp = open("./Files/pg_generic_tea_sql.txt","r")
+                    query = fp.read()
+                    fp.close()
+                elif report_choice == "Chat" :
+                    rep_name="Chat"
+                    fp = open("./Files/pg_generic_chat_sql.txt","r")
+                    query = fp.read()
+                    fp.close()
+                elif report_choice == "Snacks" :
+                    rep_name="Snacks"
+                    fp = open("./Files/pg_generic_snacks_sql.txt","r")
+                    query = fp.read()
+                    fp.close()
+                cursor = connection.cursor()
+                params = {
+                    'date_start': date_start,  
+                    'date_end': date_end       
+                }
+
+                cursor.execute(query, params)
+                rows = cursor.fetchall()
+                columns = [desc[0] for desc in cursor.description]
+                df_sales = pd.DataFrame(rows, columns=columns)
+                df_sales.columns = df_sales.columns.str.lower()
+                st.dataframe(df_sales)
+                if not df_sales.empty :
+                
+                    fig_pie, ax = plt.subplots()
+                    df_sales['sales_amt'] = pd.to_numeric(df_sales['sales_amt'], errors='coerce')
+                    sales_by_item = df_sales.groupby('item_name')['sales_amt'].sum()
+                    sales_by_item.plot(kind='pie', ax=ax, autopct='%1.1f%%', labels=sales_by_item.index)
+                    ax.set_title('Sales Breakdown by Item')
+                    st.pyplot(fig_pie)
+                
+                    if user_choice == 'N' :
+                        output = io.BytesIO()
+                        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                            df_sales.to_excel(writer, index=False, sheet_name='Sales Data')
+                            output.seek(0)
+
+                        st.download_button(
+                            "Download Dynamic Excel", 
+                            output.getvalue(), 
+                            file_name='in_mem_dynamic_report.xlsx',
+                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                        )
+
+                        st.success("Excel ready for download (generated in memory—no file written to disk).")
+                    else :
+                        file_name = os.path.join(REPORTS_DIR, f"dynamic_{report_choice}_sales_report.xlsx")
+                        df_sales.to_excel(file_name, index=False)
+                        with open(file_name, 'rb') as f:
+                            st.download_button("Download Dynamic Excel", f.read(), file_name=file_name)
+                else:
+                    st.info("No sales data for selected range.")
+
+        with tabW:
+            if st.button("Generate Xcel Report"):
+                df_sales =  pull_week_data(connection)
+                st.dataframe(df_sales)
+                file_name = os.path.join(REPORTS_DIR,"dynamic_Weekly_report.xlsx")
+                df_sales.to_excel(file_name, index=False)
+                with open(file_name, 'rb') as f:
+                     st.download_button("Download Dynamic Excel", f.read(), file_name=file_name)
+                
+            
+            if st.button("Show Visuals"):
+                item_lis = Week_sale_items(connection)
+                days = sorted(set(item[0] for item in item_lis))  
+                item_types = sorted(set(item[1] for item in item_lis))
+                num_days = len(days)
+                
+
+                sale_amt = np.zeros((len(days), len(item_types)))
+                for day_idx, day in enumerate(days):
+                    for item_idx, items in enumerate(item_types):
+                        for item in item_lis:
+                            
+                            if item[0] == day and item[1] == items:
+                                sale_amt[day_idx, item_idx] = item[2]
+                    
+                    
+                colors = plt.cm.tab10(np.linspace(0, 1, num_days))
+                
+
+                bar_width = 0.8/num_days
+                x = np.arange(len(item_types))
+                fig, ax = plt.subplots()
+
+                for day_idx, day in enumerate(days):
+                    offset = (day_idx - (num_days - 1) / 2) * bar_width
+                    ax.bar(x + offset, sale_amt[day_idx], bar_width, label=day, color=colors[day_idx])
+
+                ax.set_xlabel('Item Type')
+                ax.set_ylabel('Sales Amount')
+                ax.set_title('Item Sales by Day')
+                ax.set_xticks(x)
+                ax.set_xticklabels(item_types, rotation=45, ha='right')
+                ax.legend()
+                ax.grid(True, axis='y', linestyle='--', alpha=0.7)
+
+                st.pyplot(fig)
+
+        with tabM:
+            item_lis = []
+            if st.button("Generate Monthly Xcel Report"):
+                df_sales =  pull_month_data(connection)
+                st.dataframe(df_sales)
+                file_name = f"./reports/dynamic_Monthly_report.xlsx"
+                df_sales.to_excel(file_name, index=False)
+                with open(file_name, 'rb') as f:
+                     st.download_button("Download Dynamic Excel", f.read(), file_name=file_name)
+
+            option = st.selectbox(
+                label="Choose an option",
+                options=["Item & Qty", "Item & Sales"]
+                )
+
+            if st.button("Show Visual"):
+                
+                if option == "Item & Qty" :
+                    
+                    item_lis = get_month_data(connection)
+                    weeks = sorted(set(item[0] for item in item_lis))  
+                    item_types = sorted(set(item[1] for item in item_lis))
+                    num_weeks = len(weeks)
+                
+
+                    sale_amt = np.zeros((len(weeks), len(item_types)))
+                    for week_idx, week in enumerate(weeks):
+                        for item_idx, items in enumerate(item_types):
+                            for item in item_lis:
+                            
+                                if item[0] == week and item[1] == items:
+                                    sale_amt[week_idx, item_idx] = item[3]
+                    
+                    
+                    colors = plt.cm.tab10(np.linspace(0, 1, num_weeks))
+                
+
+                    bar_width = 0.8/num_weeks
+                    x = np.arange(len(item_types))
+                    fig, ax = plt.subplots()
+
+                    for week_idx, week in enumerate(weeks):
+                        offset = (week_idx - (num_weeks - 1) / 2) * bar_width
+                        ax.bar(x + offset, sale_amt[week_idx], bar_width, label=week, color=colors[week_idx])
+
+                    ax.set_xlabel('Item Type')
+                    ax.set_ylabel('Sales Amount')
+                    ax.set_title('Item Sales by Week')
+                    ax.set_xticks(x)
+                    ax.set_xticklabels(item_types, rotation=45, ha='right')
+                    ax.legend()
+                    ax.grid(True, axis='y', linestyle='--', alpha=0.7)
+
+                    st.pyplot(fig)
+
+                else :
+                    
+                    item_lis = get_month_data(connection)
+                    weeks = sorted(set(item[0] for item in item_lis))  
+                    item_types = sorted(set(item[1] for item in item_lis))
+                    num_weeks = len(weeks)
+                
+
+                    sale_amt = np.zeros((len(weeks), len(item_types)))
+                    for week_idx, week in enumerate(weeks):
+                        for item_idx, items in enumerate(item_types):
+                            for item in item_lis:
+                            
+                                if item[0] == week and item[1] == items:
+                                    sale_amt[week_idx, item_idx] = item[4]
+                    
+                    
+                    colors = plt.cm.tab10(np.linspace(0, 1, num_weeks))
+                
+
+                    bar_width = 0.8/num_weeks
+                    x = np.arange(len(item_types))
+                    fig, ax = plt.subplots()
+
+                    for week_idx, week in enumerate(weeks):
+                        offset = (week_idx - (num_weeks - 1) / 2) * bar_width
+                        ax.bar(x + offset, sale_amt[week_idx], bar_width, label=week, color=colors[week_idx])
+
+                    ax.set_xlabel('Item Type')
+                    ax.set_ylabel('Sales Quantity')
+                    ax.set_title('Item Sales by Week')
+                    ax.set_xticks(x)
+                    ax.set_xticklabels(item_types, rotation=45, ha='right')
+                    ax.legend()
+                    ax.grid(True, axis='y', linestyle='--', alpha=0.7)
+
+                    st.pyplot(fig)
+
+        with tabA:
+            st.header("Welcome to Dynamic Report Generation")
+            
+            column_map = {
+                1 : "value_date",
+                2 : "Item_name",
+                3 : "Quantity",
+                4 : "Sales_Amt"
+            }
+            field_name_map = {
+                1 : "Sales Date",
+                2 : "Item Name",
+                3 : "Quantity",
+                4 : "Sales_Amt"
+            }
+            item_map = {
+                1 : "Coffee",
+                2 : "Tea",
+                3 : "Chat",
+                4 : "Snacks"
+            }
+
+            table_map = {
+                "Coffee" : "Coffee_menu_tbl",
+                "Tea" : "Tea_menu_tbl",
+                "Chat" : "Chat_menu_tbl",
+                "Snacks" : "special_snacks_tbl"
+            }
+
+            field_map = {
+                "Coffee_menu_tbl" : "Coffee_name",
+                "Tea_menu_tbl" : "Tea_name",
+                "Chat_menu_tbl" : "Chat_name",
+                "special_snacks_tbl" : "item_name"
+            }
+
+            period_map = {
+                1 : "Daily",
+                2 : "Weekly",
+                3 : "Monthly",
+                4 : "Customized Date"
+            }
+
+            item_option = st.selectbox(
+                label="Choose the Item",
+                options=["Coffee", "Tea", "Chat", "Snacks"]
+                )
+
+            date_start = st.date_input("From Date")
+            date_end = st.date_input("To Date")
+            if "reset_widgets" not in st.session_state:
+                st.session_state.reset_widgets = False
+
+            def reset_state():
+                st.session_state.reset_widgets = True
+
+            selected_fields = {}
+            aggregate_fields = {}
+            order_fields = {}
+            agg_fields = []
+            query_fields = []
+            allowed_fields = set()
+            allowed_fields = ("Quantity", "Sales_Amt")
+            agg_options = []
+            order_option = []
+            order_flds = []
+            ord_fields = {}
+            column_names = []
+            sql_qry = ""
+
+            st.write("Choose the data Fields")
+            
+            field_options = ["Value_Date", "Item_Name", "Quantity", "Sales_Amt"]
+
+            for column in field_options:
+                if f"selected_{column}" not in st.session_state:
+                    st.session_state[f"selected_{column}"] = False
+                if f"aggregate_{column}" not in st.session_state:
+                    st.session_state[f"aggregate_{column}"] = False
+                if f"order_{column}" not in st.session_state:
+                    st.session_state[f"order_{column}"] = False
+
+            if st.button("Clear Data"):
+                reset_state()
+                for column in field_options:
+                    st.session_state[f"selected_{column}"] = False
+                    
+            for column in field_options:
+                selected_fields[column] = st.checkbox(column,key=f"selected_{column}")
+
+            for column in field_options:
+                if selected_fields[column]:
+                    query_fields.append(column)
+                    if column in allowed_fields :
+                        agg_options.append(column)
+
+            st.write("Choose Aggregate Fields")
+
+            for field in agg_options:
+                aggregate_fields[field] = st.checkbox(field, key=f"aggregate_{field}")
+
+            for field in agg_options:
+                if aggregate_fields[field] :
+                    agg_fields.append(field)
+
+            qry_str = "SELECT "      
+            for i in range(len(query_fields)) :
+                if i == 0 :
+                    qry_str += f"{query_fields[i]}"
+                else :
+                    if query_fields[i] in agg_fields :
+                        qry_str += f",SUM({query_fields[i]})"
+                    else :
+                        qry_str += f",{query_fields[i]}"
+
+            for i in range(len(query_fields)) :
+                if query_fields[i] in agg_fields :
+                    column_names.append(f"Tot.{query_fields[i]}")
+                else :
+                    column_names.append(query_fields[i])
+                
+            qry_str += " FROM sales_dtl_tbl "
+            if item_option == "Coffee" :
+                qry_str += " WHERE item_name IN (SELECT coffee_name FROM coffee_menu_tbl )"
+            elif item_option == "Tea" :
+                qry_str += " WHERE item_name IN (SELECT tea_name FROM tea_menu_tbl )"
+            elif item_option == "Chat" :
+                qry_str += " WHERE item_name IN (SELECT chat_name FROM chat_menu_tbl )"
+            else :
+                qry_str += " WHERE item_name IN (SELECT item_name FROM special_snacks_tbl )"
+
+            qry_str += f" AND value_date BETWEEN TO_DATE('{date_start}','YYYY-MM-DD') AND TO_DATE('{date_end}','YYYY-MM-DD')"
+            if len(agg_fields) != 0 :
+                qry_str += " GROUP BY "
+                for i in range(len(query_fields)) :
+                    if query_fields[i] not in agg_fields :
+                        if i == 0 :
+                            qry_str += f"{query_fields[i]}"
+                        else :
+                            qry_str += f",{query_fields[i]}"
+
+            st.write("Choose Order by")
+            for i in range(len(query_fields)) :
+                if query_fields[i] not in agg_fields :
+                    order_option.append(query_fields[i])
+
+            for field in order_option:
+                order_fields[field] = st.checkbox(field, key=f"order_{field}")
+
+            for field in order_option:
+                if order_fields[field] :
+                    order_flds.append(field)
+            
+            
+            if len(order_flds) > 0:
+                qry_str += f" ORDER BY "
+                for i in range(len(order_flds)) :
+                    if i == 0 :
+                        qry_str += f"{order_flds[i]}"
+                    else :
+                        qry_str += f",{order_flds[i]}"
+                    
+            st.write("Choose asc/desc")
+            if st.session_state.reset_widgets:
+                st.session_state.order_radio = None
+                
+            order_choice = st.radio(
+                "Choose data order", 
+                 options=["asc", "desc"],
+                index=None,  
+                key="order_radio"  
+                )
+
+            if order_choice == "desc" :
+                qry_str += f" DESC"
+            if order_choice == "asc" :
+                qry_str += f" ASC"
+            sql_qry = qry_str
+            if(st.button('show Query')):
+                with st.expander("View Generated SQL Query", expanded=True):
+                    st.code(sql_qry, language="sql")  
+            
+            if st.button(f"Generate {item_option} Sales Xcel Report"):
+                sales_rec = execute_qry(connection, qry_str,column_names)
+                st.dataframe(sales_rec)
+                
+                file_name = f"./reports/dynamic_{item_option}_sales_report.xlsx"
+                sales_rec.to_excel(file_name, index=False)
+                with open(file_name, 'rb') as f:
+                     st.download_button("Download Dynamic Excel", f.read(), file_name=file_name)
+
+        with tab_admin4:
+            st.subheader("Process Bulk Orders")
+            order_list = {}
+            tot_price = 0.0
+            tot_tax = 0.0
+            if 'bulk_lis' not in st.session_state:
+                st.session_state.bulk_lis = []
+            tmp_lis = []
+            log_str = ""
+            
+            log_path = os.path.join(BULK_DIR, "bulk_order.log")
+            file_path = os.path.join(BULK_DIR, "loaded_file.txt")
+
+            logging.basicConfig(level=logging.INFO, filename=os.path.join(BULK_DIR, 'bulk_order.log'), force=True)
+            logger = logging.getLogger()
+            logger.info("App started")
+            
+            with open(log_path,"a") as fp :
+            
+                current_date = date.today()
+            
+                print(f"Log date: {current_date}\n",file=fp)
+                log_str += f"Log date: {current_date}\n"
+            
+                st.title("Bulk menu Reader")
+                fname = open(file_path,"w")
+
+                uploaded_file = st.file_uploader("Upload the Order File", type=["xlsx", "xls"])
+                print(f"Order file: {uploaded_file}\n",file=fp)
+                log_str += f"Order file: {uploaded_file}\n"
+                if uploaded_file is not None :
+                    target_path = os.path.join(BULK_DIR, "bulk_order.xlsx")
+                    with open(target_path, "wb") as f:
+                        f.write(uploaded_file.getvalue())
+                        f.close()
+                    fname.write(log_str)
+                fname.close()
+                fname = open(file_path,"r")
+                file=""
+                pattern = r"name='([^']+)[.]"
+                for line in fname.readlines():
+                    match =  re.search(pattern,line)
+                    if match :
+                        file = match.group(1)
+                dup_file = check_bulk_header(connection,file)
+                
+                if dup_file == 1 :
+                    st.error("Duplicate file loaded!")
+                status = "OPEN"
+                load_bulk_header(connection,file, status)
+                message = "Loaded"
+                insert_log(connection,file,message)
+                fname.close()
+
+                if uploaded_file is not None and dup_file == 0 :
+                    try:
+                        df = pd.read_excel(uploaded_file)
+        
+                        required_columns = ["Item name", "Quantity"]
+                        if all(col in df.columns for col in required_columns):
+                            df = df[required_columns]
+            
+                            st.write("### Bulk Orders from File")
+                            st.dataframe(df)
+                            for index, row in df.iterrows():
+                                item_name = row["Item name"]
+                                valid = validate_item(connection,item_name)
+                            
+                                if valid == 0 :
+                                    print(f"Invalid item- {item_name}\n",file=fp)
+                                    log_str += f"Invalid item- {item_name}\n"
+                                    message = f"Invalid item- {item_name}\n"
+                                    insert_log(connection,file,message)
+                                    continue
+                            
+                                quantity = row["Quantity"]
+                            
+                                if quantity < 0 or quantity > 100 :
+                                    print(f"Invalid quantity - {item_name}\n", file=fp)
+                                    log_str += f"Invalid quantity - {item_name}\n"
+                                    message = f"Invalid quantity - {item_name}\n"
+                                    insert_log(connection,file,message)
+                                else :
+                                    order_list[item_name] = quantity
+                                    print(f"Feteching Item - {item_name}\n", file=fp)
+                                    log_str += f"Feteching Item - {item_name}\n"
+                                    message = f"Feteching Item - {item_name}\n"
+                                    insert_log(connection,file,message)
+                                    fp.flush()
+                        
+                            st.write("### Summary")
+                            st.write(f"Total loaded Items: {len(df)}")
+                            st.write(f"Total loaded Quantity: {df['Quantity'].sum()}")
+                        
+                        else:
+                            st.error("The Excel file must contain 'Item name' and 'Quantity' columns.")
+            
+                    except Exception as e:
+                        st.error(f"Error reading the Excel file: {e}")
+                else:
+                    st.info("Upload the bulk order file to process!")
+
+                if st.button("Process Order") :
+                
+                    st.write("Processed Orders ###")
+                    st.session_state.bulk_lis = []
+                    for item, qty in order_list.items() :
+                        avail_stock, qty = get_item_stock(connection, item, qty)
+                        if qty != 0 :
+                            price, tax = get_item_price(connection,item,qty)
+                            print(f"processing {item} and quantity : {qty}\n",file=fp)
+                            log_str += f"processing {item} and quantity : {qty}\n"
+                            message = f"processing {item} and quantity : {qty}\n"
+                            insert_log(connection,file,message)
+                            tot_price += float(price)
+                            tot_tax += float(tax)
+                            tmp_lis = [item,qty,price,tax]
+                            st.session_state.bulk_lis.append(tmp_lis)
+                        else :
+                            print(f"{item} {qty} - Rejected due to stock shortage\n",file=fp)
+                            log_str += f"{item} {qty} - Rejected due to stock shortage\n"
+                            message = f"{item} {qty} - Rejected due to stock shortage\n"
+                            insert_log(connection,file,message)
+                            fp.flush()
+                    df = pd.DataFrame(st.session_state.bulk_lis, columns = ["Item Name","Quantity","Price","Tax"])
+                    st.dataframe(df)
+                    col1, col2, col3 = st.columns(3)
+                    col1.metric("Subtotal", f"Rs.{tot_price:.2f}")
+                    col2.metric("Tax Amt", f"Rs.{tot_tax:.2f}")
+                    col3.metric("Tot. Bill Amt", f"Rs.{tot_price+tot_tax:.2f}")
+                    print(f"Tot. Bill Amt For current order", f"Rs.{tot_price+tot_tax:.2f}",file=fp)
+                    log_str += f"Tot. Bill Amt For current order, Rs.{tot_price+tot_tax:.2f}"
+                    message = f"Tot. Bill Amt For current order =  Rs.{tot_price+tot_tax:.2f}"
+                    insert_log(connection,file,message)
+                    fp.close()
+                    status = "Processed"
+                    update_bulk_header(connection,file,status)
+                    insert_db_data(connection, st.session_state.bulk_lis)
+                    fig_pie, ax = plt.subplots()
+                    sales_by_item = df.groupby('Item Name')['Quantity'].sum()
+                    
+                    if len(sales_by_item) > 0 :
+                        sales_by_item.plot(kind='pie', ax=ax, autopct='%1.1f%%', labels=sales_by_item.index)
+                        ax.set_title('Sales Breakdown by Item')
+                        st.pyplot(fig_pie)
+
+                if st.button(f"Generate Bill in Xcel Report"):
+                    bill_rec = pd.DataFrame(st.session_state.bulk_lis, columns = ["Item Name","Quantity","Price","Tax"])
+                                
+                    file_name = f"./reports/Bill_Statement.xlsx"
+                    bill_rec.to_excel(file_name, index=False)
+                    with open(file_name, 'rb') as f:
+                         st.download_button("Download Bill Statement", f.read(), file_name=file_name)
 
 
 # Footer
