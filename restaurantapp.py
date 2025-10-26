@@ -717,7 +717,8 @@ def send_stock_alert(connection, item_name, new_stock):
     
     # Check for recent alert (simple DB flag to avoid spam; add column if needed)
     cursor = connection.cursor()
-    cursor.execute("SELECT 1 FROM stock_alerts WHERE item_name = %s AND alert_date = CURRENT_DATE", (item_name,))
+    qry = "SELECT 1 FROM stock_alerts WHERE item_name = :1 AND alert_date = trunc(sysdate)"
+    cursor.execute(qry, { "1" : item_name} )
     if cursor.fetchone():
         cursor.close()
         return  # Already alerted today
@@ -755,7 +756,8 @@ def send_stock_alert(connection, item_name, new_stock):
         
         # Log to DB (create table if needed: CREATE TABLE stock_alerts (item_name VARCHAR, alert_date DATE);)
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO stock_alerts (item_name, alert_date) VALUES (%s, CURRENT_DATE)", (item_name,))
+        qry = "INSERT INTO stock_alerts (item_name, alert_date) VALUES (:1, trunc(sysdate))"
+        cursor.execute(qry, {"1" : item_name} )
         connection.commit()
         cursor.close()
     except Exception as e:
