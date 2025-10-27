@@ -8,7 +8,7 @@ __pycache__
 *.pyo
 
 # Sensitive files
-.env
+#.env
 Files/db_prop.txt
 
 # Generated files
