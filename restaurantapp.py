@@ -259,7 +259,7 @@ def coffee_sales_fig(connection, period):
     cursor.close()
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Coffee Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, color=plt.cm.Set3(np.linspace(0, 1, len(df))),title=f'Coffee Sales ({period.capitalize()})')
         ax.set_xlabel('Coffee Flavor')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -301,7 +301,7 @@ def tea_sales_fig(connection, period='daily'):
     cursor.close()
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Tea Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax,color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'Tea Sales ({period.capitalize()})')
         ax.set_xlabel('Tea Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -344,7 +344,7 @@ def chat_sales_fig(connection, period='daily'):
     cursor.close()
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Chat Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax,color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'Chat Sales ({period.capitalize()})')
         ax.set_xlabel('Chat Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -386,7 +386,7 @@ def Spl_sales_fig(connection, period='daily'):
     cursor.close()
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Snacks Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax,color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'Snacks Sales ({period.capitalize()})')
         ax.set_xlabel('Snack Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -484,7 +484,7 @@ def overall_sales_fig(connection, period='daily'):
     cursor.close()
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'OverAll Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax,color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'OverAll Sales ({period.capitalize()})')
         ax.set_xlabel('Item Type')
         ax.set_ylabel('Sales Quantity')
         return fig

@@ -293,7 +293,7 @@ def tea_sales_fig(connection, period='daily'):
     df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Tea Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax,color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'Tea Sales ({period.capitalize()})')
         ax.set_xlabel('Tea Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -336,7 +336,7 @@ def chat_sales_fig(connection, period='daily'):
     df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Chat Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'Chat Sales ({period.capitalize()})')
         ax.set_xlabel('Chat Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -379,7 +379,7 @@ def Spl_sales_fig(connection, period='daily'):
     df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Snacks Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'Snacks Sales ({period.capitalize()})')
         ax.set_xlabel('Snack Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -473,7 +473,7 @@ def overall_sales_fig(connection, period='daily'):
     df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'OverAll Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax,color=plt.cm.Set3(np.linspace(0, 1, len(df))), title=f'OverAll Sales ({period.capitalize()})')
         ax.set_xlabel('Item Type')
         ax.set_ylabel('Sales Quantity')
         return fig
@@ -1373,8 +1373,8 @@ elif portal == "Corporate (Admin)":
                     
                 colors = plt.cm.tab10(np.linspace(0, 1, num_days))
                 
-
-                bar_width = 0.8/num_days
+                if num_days > 0:
+                    bar_width = 0.8/num_days
                 x = np.arange(len(item_types))
                 fig, ax = plt.subplots()
 
