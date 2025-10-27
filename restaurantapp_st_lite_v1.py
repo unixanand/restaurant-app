@@ -734,7 +734,39 @@ def send_stock_alert(connection, item_name, new_stock):
     except Exception as e:
         st.error(f"Email alert failed: {e}")
         logging.error(f"Stock alert error for {item_name}: {e}")
-
+##
+def send_sms_alert(item_name, new_stock):
+    """Send SMS via email gateway (free)."""
+    if not os.environ.get('SMS_GATEWAYS', 'false').lower() == 'true':
+        return
+    
+    sms_emails = [phone.strip() for phone in os.environ.get('SMS_RECIPIENTS', '').split(',')] if os.environ.get('SMS_RECIPIENTS') else []
+    
+    if not sms_emails:
+        st.warning("[DEBUG] No SMS recipients configured.")
+        return
+    
+    # Reuse email setup (short text version)
+    message = "Test msg"
+    msg = MIMEText(message, 'plain')
+    #msg = MIMEText(f"🚨 Stock Alert: {item_name} out of stock! Level: {new_stock}. Replenish now. {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y-%m-%d %H:%M')}", 'plain')
+    msg['Subject'] = ''  # No subject for SMS
+    msg['From'] = EMAIL_USER
+    
+    try:
+        server = smtplib.SMTP(SMTP_HOST, SMTP_PORT)
+        server.starttls()
+        server.login(EMAIL_USER, EMAIL_PASS)
+        for sms_email in sms_emails:  # Send to each
+            msg['To'] = sms_email
+            server.send_message(msg)
+        server.quit()
+        st.success(f"SMS alert sent for {item_name} to {len(sms_emails)} numbers!")
+        st.write(f"[DEBUG] SMS sent to {sms_emails}")
+    except Exception as e:
+        st.error(f"SMS alert failed: {e}")
+        logging.error(f"SMS error for {item_name}: {e}")
+        
 # --- Initialize Session State ---
 
 if 'initialized' not in st.session_state:
@@ -817,6 +849,7 @@ if portal == "Public (Order)":
                         st.success(f"Added {quantity} x {item_name}!")
                         if st.session_state.stock_rec[item_name] <= 0:
                             send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
+                            #send_sms_alert(item_name, st.session_state.stock_rec[item_name])
                         st.rerun()
                     else:
                         st.error("Please select a quantity greater than 0.")
@@ -847,6 +880,7 @@ if portal == "Public (Order)":
                 st.success(f"Added {quantity} x {item_name}!")
                 if st.session_state.stock_rec[item_name] <= 0:
                     send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
+                    #send_sms_alert(item_name, st.session_state.stock_rec[item_name])
                 st.rerun()
         else:
             st.warning("No tea items available.")
@@ -875,6 +909,7 @@ if portal == "Public (Order)":
                 st.success(f"Added {quantity} x {item_name}!")
                 if st.session_state.stock_rec[item_name] <= 0:
                     send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
+                    #send_sms_alert(item_name, st.session_state.stock_rec[item_name])
                 st.rerun()
         else:
             st.warning(f"No chat items available for {category}.")
@@ -903,6 +938,7 @@ if portal == "Public (Order)":
                 st.success(f"Added {quantity} x {item_name}!")
                 if st.session_state.stock_rec[item_name] <= 0:
                     send_stock_alert(connection, item_name, st.session_state.stock_rec[item_name])
+                    #send_sms_alert(item_name, st.session_state.stock_rec[item_name])
                 st.rerun()
         else:
             st.warning("Special menu unavailable (only 5-7 PM).")
