@@ -250,7 +250,7 @@ def coffee_sales_fig(connection, period):
     df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
     if not df.empty:
         fig, ax = plt.subplots()
-        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, title=f'Coffee Sales ({period.capitalize()})')
+        df.plot(kind='bar', x='Item', y='Quantity', ax=ax, color=plt.cm.Set3(np.linspace(0, 1, len(df))),title=f'Coffee Sales ({period.capitalize()})')
         ax.set_xlabel('Coffee Flavor')
         ax.set_ylabel('Sales Quantity')
         return fig
