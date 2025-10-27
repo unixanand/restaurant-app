@@ -5,5 +5,5 @@ Files/db_prop.txt  # Sensitive DB credentials
 reports/*.xlsx  # Generated Excel reports
 Bulk_Import/bulk_order.log  # Log files.env 
 logs/ 
-#.env
-#dockerRun.bat
+.env
+dockerRun.bat
