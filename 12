@@ -1,0 +1,709 @@
+restaurantapp.py:16:1: F401 'streamlit.web.cli as stcli' imported but unused
+restaurantapp.py:17:1: F401 'sys' imported but unused
+restaurantapp.py:76:80: E501 line too long (86 > 79 characters)
+restaurantapp.py:78:1: W293 blank line contains whitespace
+restaurantapp.py:83:23: E203 whitespace before ':'
+restaurantapp.py:84:14: E111 indentation is not a multiple of 4
+restaurantapp.py:84:14: E117 over-indented
+restaurantapp.py:87:20: E203 whitespace before ':'
+restaurantapp.py:91:1: W293 blank line contains whitespace
+restaurantapp.py:106:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:109:80: E501 line too long (107 > 79 characters)
+restaurantapp.py:120:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:123:80: E501 line too long (127 > 79 characters)
+restaurantapp.py:134:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:137:80: E501 line too long (118 > 79 characters)
+restaurantapp.py:142:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:145:80: E501 line too long (123 > 79 characters)
+restaurantapp.py:151:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:151:30: E231 missing whitespace after ','
+restaurantapp.py:151:43: E231 missing whitespace after ','
+restaurantapp.py:155:1: W293 blank line contains whitespace
+restaurantapp.py:156:1: W293 blank line contains whitespace
+restaurantapp.py:157:5: E303 too many blank lines (2)
+restaurantapp.py:157:80: E501 line too long (94 > 79 characters)
+restaurantapp.py:159:1: W293 blank line contains whitespace
+restaurantapp.py:160:31: E231 missing whitespace after ','
+restaurantapp.py:160:38: E203 whitespace before ':'
+restaurantapp.py:160:56: E203 whitespace before ':'
+restaurantapp.py:162:1: W293 blank line contains whitespace
+restaurantapp.py:174:80: E501 line too long (104 > 79 characters)
+restaurantapp.py:175:80: E501 line too long (119 > 79 characters)
+restaurantapp.py:183:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:186:80: E501 line too long (164 > 79 characters)
+restaurantapp.py:187:80: E501 line too long (118 > 79 characters)
+restaurantapp.py:194:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:197:80: E501 line too long (155 > 79 characters)
+restaurantapp.py:198:80: E501 line too long (115 > 79 characters)
+restaurantapp.py:205:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:209:80: E501 line too long (288 > 79 characters)
+restaurantapp.py:211:80: E501 line too long (287 > 79 characters)
+restaurantapp.py:212:9: E203 whitespace before ':'
+restaurantapp.py:212:11: W291 trailing whitespace
+restaurantapp.py:213:80: E501 line too long (267 > 79 characters)
+restaurantapp.py:220:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:229:1: W293 blank line contains whitespace
+restaurantapp.py:233:80: E501 line too long (107 > 79 characters)
+restaurantapp.py:240:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:243:80: E501 line too long (107 > 79 characters)
+restaurantapp.py:250:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:254:80: E501 line too long (184 > 79 characters)
+restaurantapp.py:256:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:257:80: E501 line too long (187 > 79 characters)
+restaurantapp.py:260:80: E501 line too long (206 > 79 characters)
+restaurantapp.py:267:80: E501 line too long (151 > 79 characters)
+restaurantapp.py:267:105: E231 missing whitespace after ','
+restaurantapp.py:273:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:277:80: E501 line too long (184 > 79 characters)
+restaurantapp.py:279:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:280:80: E501 line too long (187 > 79 characters)
+restaurantapp.py:283:80: E501 line too long (206 > 79 characters)
+restaurantapp.py:292:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:296:80: E501 line too long (178 > 79 characters)
+restaurantapp.py:298:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:299:80: E501 line too long (181 > 79 characters)
+restaurantapp.py:302:80: E501 line too long (200 > 79 characters)
+restaurantapp.py:309:58: E231 missing whitespace after ','
+restaurantapp.py:309:80: E501 line too long (148 > 79 characters)
+restaurantapp.py:315:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:319:80: E501 line too long (178 > 79 characters)
+restaurantapp.py:321:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:322:80: E501 line too long (181 > 79 characters)
+restaurantapp.py:325:80: E501 line too long (200 > 79 characters)
+restaurantapp.py:339:80: E501 line too long (180 > 79 characters)
+restaurantapp.py:341:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:342:80: E501 line too long (183 > 79 characters)
+restaurantapp.py:345:80: E501 line too long (202 > 79 characters)
+restaurantapp.py:352:58: E231 missing whitespace after ','
+restaurantapp.py:352:80: E501 line too long (149 > 79 characters)
+restaurantapp.py:358:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:362:80: E501 line too long (180 > 79 characters)
+restaurantapp.py:364:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:365:80: E501 line too long (183 > 79 characters)
+restaurantapp.py:368:80: E501 line too long (202 > 79 characters)
+restaurantapp.py:377:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:381:80: E501 line too long (185 > 79 characters)
+restaurantapp.py:383:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:384:80: E501 line too long (188 > 79 characters)
+restaurantapp.py:387:80: E501 line too long (207 > 79 characters)
+restaurantapp.py:394:58: E231 missing whitespace after ','
+restaurantapp.py:394:80: E501 line too long (151 > 79 characters)
+restaurantapp.py:401:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:405:80: E501 line too long (185 > 79 characters)
+restaurantapp.py:407:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:408:80: E501 line too long (188 > 79 characters)
+restaurantapp.py:411:80: E501 line too long (207 > 79 characters)
+restaurantapp.py:420:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:420:31: E203 whitespace before ':'
+restaurantapp.py:427:80: E501 line too long (135 > 79 characters)
+restaurantapp.py:428:80: E501 line too long (107 > 79 characters)
+restaurantapp.py:432:49: E203 whitespace before ':'
+restaurantapp.py:432:50: E231 missing whitespace after ':'
+restaurantapp.py:434:36: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:434:44: E231 missing whitespace after ','
+restaurantapp.py:434:51: E231 missing whitespace after ','
+restaurantapp.py:434:62: E231 missing whitespace after ','
+restaurantapp.py:438:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:438:36: E231 missing whitespace after ','
+restaurantapp.py:438:50: E203 whitespace before ':'
+restaurantapp.py:442:36: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:442:38: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:446:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:453:80: E501 line too long (96 > 79 characters)
+restaurantapp.py:457:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:457:31: E203 whitespace before ':'
+restaurantapp.py:460:19: E231 missing whitespace after ','
+restaurantapp.py:470:1: W293 blank line contains whitespace
+restaurantapp.py:473:1: W293 blank line contains whitespace
+restaurantapp.py:479:80: E501 line too long (126 > 79 characters)
+restaurantapp.py:481:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:482:80: E501 line too long (129 > 79 characters)
+restaurantapp.py:485:80: E501 line too long (148 > 79 characters)
+restaurantapp.py:492:58: E231 missing whitespace after ','
+restaurantapp.py:492:80: E501 line too long (152 > 79 characters)
+restaurantapp.py:498:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:502:80: E501 line too long (126 > 79 characters)
+restaurantapp.py:504:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:505:80: E501 line too long (129 > 79 characters)
+restaurantapp.py:508:80: E501 line too long (148 > 79 characters)
+restaurantapp.py:518:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:518:32: E203 whitespace before ':'
+restaurantapp.py:519:5: F401 'numpy as np' imported but unused
+restaurantapp.py:520:5: F401 'matplotlib.pyplot as plt' imported but unused
+restaurantapp.py:524:1: W293 blank line contains whitespace
+restaurantapp.py:530:1: W293 blank line contains whitespace
+restaurantapp.py:533:80: E501 line too long (135 > 79 characters)
+restaurantapp.py:534:80: E501 line too long (149 > 79 characters)
+restaurantapp.py:535:80: E501 line too long (132 > 79 characters)
+restaurantapp.py:536:80: E501 line too long (143 > 79 characters)
+restaurantapp.py:537:80: E501 line too long (133 > 79 characters)
+restaurantapp.py:538:80: E501 line too long (145 > 79 characters)
+restaurantapp.py:539:80: E501 line too long (135 > 79 characters)
+restaurantapp.py:540:80: E501 line too long (143 > 79 characters)
+restaurantapp.py:541:1: W293 blank line contains whitespace
+restaurantapp.py:542:80: E501 line too long (101 > 79 characters)
+restaurantapp.py:544:49: E203 whitespace before ':'
+restaurantapp.py:544:50: E231 missing whitespace after ':'
+restaurantapp.py:546:15: E203 whitespace before ':'
+restaurantapp.py:548:23: E203 whitespace before ':'
+restaurantapp.py:554:1: W293 blank line contains whitespace
+restaurantapp.py:557:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:575:36: E231 missing whitespace after ','
+restaurantapp.py:575:41: E203 whitespace before ':'
+restaurantapp.py:577:1: W293 blank line contains whitespace
+restaurantapp.py:580:27: E231 missing whitespace after ','
+restaurantapp.py:580:35: E203 whitespace before ':'
+restaurantapp.py:583:35: E203 whitespace before ':'
+restaurantapp.py:587:1: W293 blank line contains whitespace
+restaurantapp.py:588:1: W293 blank line contains whitespace
+restaurantapp.py:589:5: E303 too many blank lines (2)
+restaurantapp.py:589:80: E501 line too long (119 > 79 characters)
+restaurantapp.py:590:36: E203 whitespace before ':'
+restaurantapp.py:591:15: E203 whitespace before ':'
+restaurantapp.py:596:5: E265 block comment should start with '# '
+restaurantapp.py:596:33: W291 trailing whitespace
+restaurantapp.py:598:1: W293 blank line contains whitespace
+restaurantapp.py:599:24: E203 whitespace before ':'
+restaurantapp.py:602:1: W293 blank line contains whitespace
+restaurantapp.py:603:28: E203 whitespace before ':'
+restaurantapp.py:605:1: W293 blank line contains whitespace
+restaurantapp.py:607:80: E501 line too long (137 > 79 characters)
+restaurantapp.py:609:44: E203 whitespace before ':'
+restaurantapp.py:609:66: E203 whitespace before ':'
+restaurantapp.py:609:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:615:1: W293 blank line contains whitespace
+restaurantapp.py:616:9: E203 whitespace before ':'
+restaurantapp.py:621:80: E501 line too long (130 > 79 characters)
+restaurantapp.py:622:44: E203 whitespace before ':'
+restaurantapp.py:626:23: W291 trailing whitespace
+restaurantapp.py:628:1: W293 blank line contains whitespace
+restaurantapp.py:632:1: E303 too many blank lines (4)
+restaurantapp.py:632:80: E501 line too long (105 > 79 characters)
+restaurantapp.py:634:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:639:80: E501 line too long (124 > 79 characters)
+restaurantapp.py:645:80: E501 line too long (117 > 79 characters)
+restaurantapp.py:654:1: W293 blank line contains whitespace
+restaurantapp.py:656:32: E231 missing whitespace after ','
+restaurantapp.py:656:37: E231 missing whitespace after ','
+restaurantapp.py:656:45: E203 whitespace before ':'
+restaurantapp.py:657:22: E203 whitespace before ':'
+restaurantapp.py:660:80: E501 line too long (106 > 79 characters)
+restaurantapp.py:661:35: E203 whitespace before ':'
+restaurantapp.py:664:19: E203 whitespace before ':'
+restaurantapp.py:666:1: W293 blank line contains whitespace
+restaurantapp.py:667:80: E501 line too long (89 > 79 characters)
+restaurantapp.py:668:39: E203 whitespace before ':'
+restaurantapp.py:668:54: E203 whitespace before ':'
+restaurantapp.py:669:1: W293 blank line contains whitespace
+restaurantapp.py:672:1: W293 blank line contains whitespace
+restaurantapp.py:673:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:673:34: E231 missing whitespace after ','
+restaurantapp.py:673:39: E231 missing whitespace after ','
+restaurantapp.py:673:47: E203 whitespace before ':'
+restaurantapp.py:675:80: E501 line too long (114 > 79 characters)
+restaurantapp.py:676:35: E203 whitespace before ':'
+restaurantapp.py:676:48: E203 whitespace before ':'
+restaurantapp.py:680:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:680:33: E231 missing whitespace after ','
+restaurantapp.py:680:39: E203 whitespace before ':'
+restaurantapp.py:681:22: E203 whitespace before ':'
+restaurantapp.py:683:80: E501 line too long (134 > 79 characters)
+restaurantapp.py:684:39: E203 whitespace before ':'
+restaurantapp.py:687:23: E203 whitespace before ':'
+restaurantapp.py:690:1: W293 blank line contains whitespace
+restaurantapp.py:691:1: E302 expected 2 blank lines, found 1
+restaurantapp.py:691:30: E231 missing whitespace after ','
+restaurantapp.py:691:35: E231 missing whitespace after ','
+restaurantapp.py:691:40: E203 whitespace before ':'
+restaurantapp.py:693:80: E501 line too long (85 > 79 characters)
+restaurantapp.py:694:8: E203 whitespace before ':'
+restaurantapp.py:695:31: E231 missing whitespace after ','
+restaurantapp.py:695:38: E203 whitespace before ':'
+restaurantapp.py:695:39: E231 missing whitespace after ':'
+restaurantapp.py:698:15: E203 whitespace before ':'
+restaurantapp.py:700:23: E203 whitespace before ':'
+restaurantapp.py:702:27: E203 whitespace before ':'
+restaurantapp.py:705:1: W293 blank line contains whitespace
+restaurantapp.py:708:80: E501 line too long (86 > 79 characters)
+restaurantapp.py:710:39: E203 whitespace before ':'
+restaurantapp.py:711:15: E203 whitespace before ':'
+restaurantapp.py:713:23: E203 whitespace before ':'
+restaurantapp.py:717:1: W293 blank line contains whitespace
+restaurantapp.py:720:1: W293 blank line contains whitespace
+restaurantapp.py:721:1: W293 blank line contains whitespace
+restaurantapp.py:723:1: E303 too many blank lines (3)
+restaurantapp.py:725:1: E302 expected 2 blank lines, found 3
+restaurantapp.py:729:1: W293 blank line contains whitespace
+restaurantapp.py:730:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:732:80: E501 line too long (91 > 79 characters)
+restaurantapp.py:733:26: E201 whitespace after '{'
+restaurantapp.py:733:30: E203 whitespace before ':'
+restaurantapp.py:733:43: E202 whitespace before ')'
+restaurantapp.py:738:1: W293 blank line contains whitespace
+restaurantapp.py:744:1: W293 blank line contains whitespace
+restaurantapp.py:750:80: E501 line too long (96 > 79 characters)
+restaurantapp.py:752:80: E501 line too long (92 > 79 characters)
+restaurantapp.py:757:1: W293 blank line contains whitespace
+restaurantapp.py:763:13: F841 local variable 'text' is assigned to but never used
+restaurantapp.py:767:80: E501 line too long (83 > 79 characters)
+restaurantapp.py:768:1: W293 blank line contains whitespace
+restaurantapp.py:769:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:771:80: E501 line too long (92 > 79 characters)
+restaurantapp.py:772:33: E203 whitespace before ':'
+restaurantapp.py:772:46: E202 whitespace before ')'
+restaurantapp.py:789:1: W293 blank line contains whitespace
+restaurantapp.py:797:80: E501 line too long (102 > 79 characters)
+restaurantapp.py:823:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:831:80: E501 line too long (110 > 79 characters)
+restaurantapp.py:832:1: W293 blank line contains whitespace
+restaurantapp.py:840:1: W293 blank line contains whitespace
+restaurantapp.py:841:1: W293 blank line contains whitespace
+restaurantapp.py:842:13: E303 too many blank lines (2)
+restaurantapp.py:843:80: E501 line too long (142 > 79 characters)
+restaurantapp.py:846:80: E501 line too long (130 > 79 characters)
+restaurantapp.py:846:113: E231 missing whitespace after ','
+restaurantapp.py:847:1: W293 blank line contains whitespace
+restaurantapp.py:854:80: E501 line too long (101 > 79 characters)
+restaurantapp.py:855:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:857:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:860:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:863:80: E501 line too long (106 > 79 characters)
+restaurantapp.py:868:1: W293 blank line contains whitespace
+restaurantapp.py:869:9: E303 too many blank lines (2)
+restaurantapp.py:877:1: W293 blank line contains whitespace
+restaurantapp.py:879:80: E501 line too long (142 > 79 characters)
+restaurantapp.py:882:80: E501 line too long (127 > 79 characters)
+restaurantapp.py:882:113: E231 missing whitespace after ','
+restaurantapp.py:885:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:886:80: E501 line too long (95 > 79 characters)
+restaurantapp.py:894:80: E501 line too long (98 > 79 characters)
+restaurantapp.py:905:1: W293 blank line contains whitespace
+restaurantapp.py:907:80: E501 line too long (142 > 79 characters)
+restaurantapp.py:910:80: E501 line too long (128 > 79 characters)
+restaurantapp.py:910:113: E231 missing whitespace after ','
+restaurantapp.py:913:80: E501 line too long (89 > 79 characters)
+restaurantapp.py:914:80: E501 line too long (97 > 79 characters)
+restaurantapp.py:922:80: E501 line too long (98 > 79 characters)
+restaurantapp.py:929:1: W293 blank line contains whitespace
+restaurantapp.py:933:1: W293 blank line contains whitespace
+restaurantapp.py:935:80: E501 line too long (142 > 79 characters)
+restaurantapp.py:938:80: E501 line too long (129 > 79 characters)
+restaurantapp.py:938:113: E231 missing whitespace after ','
+restaurantapp.py:941:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:942:80: E501 line too long (95 > 79 characters)
+restaurantapp.py:950:80: E501 line too long (98 > 79 characters)
+restaurantapp.py:958:80: E501 line too long (129 > 79 characters)
+restaurantapp.py:959:80: E501 line too long (84 > 79 characters)
+restaurantapp.py:963:80: E501 line too long (108 > 79 characters)
+restaurantapp.py:966:44: E231 missing whitespace after ','
+restaurantapp.py:968:80: E501 line too long (133 > 79 characters)
+restaurantapp.py:971:17: E265 block comment should start with '# '
+restaurantapp.py:972:21: E116 unexpected indentation (comment)
+restaurantapp.py:972:21: E265 block comment should start with '# '
+restaurantapp.py:973:1: W293 blank line contains whitespace
+restaurantapp.py:996:80: E501 line too long (129 > 79 characters)
+restaurantapp.py:997:80: E501 line too long (90 > 79 characters)
+restaurantapp.py:998:80: E501 line too long (84 > 79 characters)
+restaurantapp.py:999:13: E265 block comment should start with '# '
+restaurantapp.py:999:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:1029:80: E501 line too long (99 > 79 characters)
+restaurantapp.py:1050:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:1055:24: F541 f-string is missing placeholders
+restaurantapp.py:1057:39: E231 missing whitespace after ','
+restaurantapp.py:1057:80: E501 line too long (130 > 79 characters)
+restaurantapp.py:1063:80: E501 line too long (114 > 79 characters)
+restaurantapp.py:1069:80: E501 line too long (114 > 79 characters)
+restaurantapp.py:1071:1: W293 blank line contains whitespace
+restaurantapp.py:1074:1: W293 blank line contains whitespace
+restaurantapp.py:1079:34: E203 whitespace before ':'
+restaurantapp.py:1081:17: E203 whitespace before ':'
+restaurantapp.py:1081:19: W291 trailing whitespace
+restaurantapp.py:1082:31: E203 whitespace before ':'
+restaurantapp.py:1093:80: E501 line too long (137 > 79 characters)
+restaurantapp.py:1095:34: E203 whitespace before ':'
+restaurantapp.py:1096:80: E501 line too long (84 > 79 characters)
+restaurantapp.py:1097:34: E203 whitespace before ':'
+restaurantapp.py:1098:39: E203 whitespace before ':'
+restaurantapp.py:1100:34: E203 whitespace before ':'
+restaurantapp.py:1107:80: E501 line too long (118 > 79 characters)
+restaurantapp.py:1109:80: E501 line too long (112 > 79 characters)
+restaurantapp.py:1111:80: E501 line too long (128 > 79 characters)
+restaurantapp.py:1113:80: E501 line too long (119 > 79 characters)
+restaurantapp.py:1114:42: E203 whitespace before ':'
+restaurantapp.py:1115:80: E501 line too long (93 > 79 characters)
+restaurantapp.py:1116:25: E203 whitespace before ':'
+restaurantapp.py:1120:21: E265 block comment should start with '# '
+restaurantapp.py:1122:80: E501 line too long (102 > 79 characters)
+restaurantapp.py:1124:80: E501 line too long (96 > 79 characters)
+restaurantapp.py:1126:80: E501 line too long (98 > 79 characters)
+restaurantapp.py:1128:80: E501 line too long (103 > 79 characters)
+restaurantapp.py:1136:80: E501 line too long (117 > 79 characters)
+restaurantapp.py:1148:80: E501 line too long (137 > 79 characters)
+restaurantapp.py:1152:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:1154:79: W291 trailing whitespace
+restaurantapp.py:1155:80: E501 line too long (82 > 79 characters)
+restaurantapp.py:1156:1: W293 blank line contains whitespace
+restaurantapp.py:1157:1: W293 blank line contains whitespace
+restaurantapp.py:1158:17: E303 too many blank lines (2)
+restaurantapp.py:1162:80: E501 line too long (97 > 79 characters)
+restaurantapp.py:1164:80: E501 line too long (91 > 79 characters)
+restaurantapp.py:1166:80: E501 line too long (93 > 79 characters)
+restaurantapp.py:1168:80: E501 line too long (98 > 79 characters)
+restaurantapp.py:1169:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:1172:80: E501 line too long (97 > 79 characters)
+restaurantapp.py:1180:80: E501 line too long (106 > 79 characters)
+restaurantapp.py:1182:1: W293 blank line contains whitespace
+restaurantapp.py:1185:80: E501 line too long (102 > 79 characters)
+restaurantapp.py:1186:80: E501 line too long (95 > 79 characters)
+restaurantapp.py:1189:38: E231 missing whitespace after ','
+restaurantapp.py:1189:51: E231 missing whitespace after ','
+restaurantapp.py:1192:1: W293 blank line contains whitespace
+restaurantapp.py:1196:80: E501 line too long (88 > 79 characters)
+restaurantapp.py:1243:17: E265 block comment should start with '# '
+restaurantapp.py:1243:80: E501 line too long (106 > 79 characters)
+restaurantapp.py:1244:1: W293 blank line contains whitespace
+restaurantapp.py:1245:9: E265 block comment should start with '# '
+restaurantapp.py:1246:9: E265 block comment should start with '# '
+restaurantapp.py:1246:80: E501 line too long (114 > 79 characters)
+restaurantapp.py:1250:31: E221 multiple spaces before operator
+restaurantapp.py:1250:80: E501 line too long (120 > 79 characters)
+restaurantapp.py:1254:68: W291 trailing whitespace
+restaurantapp.py:1255:18: E131 continuation line unaligned for hanging indent
+restaurantapp.py:1260:53: W291 trailing whitespace
+restaurantapp.py:1261:18: E131 continuation line unaligned for hanging indent
+restaurantapp.py:1269:42: E203 whitespace before ':'
+restaurantapp.py:1270:29: E225 missing whitespace around operator
+restaurantapp.py:1271:56: E231 missing whitespace after ','
+restaurantapp.py:1274:47: E203 whitespace before ':'
+restaurantapp.py:1275:29: E225 missing whitespace around operator
+restaurantapp.py:1276:63: E231 missing whitespace after ','
+restaurantapp.py:1279:44: E203 whitespace before ':'
+restaurantapp.py:1280:29: E225 missing whitespace around operator
+restaurantapp.py:1281:60: E231 missing whitespace after ','
+restaurantapp.py:1284:45: E203 whitespace before ':'
+restaurantapp.py:1285:29: E225 missing whitespace around operator
+restaurantapp.py:1286:61: E231 missing whitespace after ','
+restaurantapp.py:1289:47: E203 whitespace before ':'
+restaurantapp.py:1290:29: E225 missing whitespace around operator
+restaurantapp.py:1291:63: E231 missing whitespace after ','
+restaurantapp.py:1294:17: E265 block comment should start with '# '
+restaurantapp.py:1295:17: E265 block comment should start with '# '
+restaurantapp.py:1297:52: E203 whitespace before ':'
+restaurantapp.py:1297:65: E203 whitespace before ','
+restaurantapp.py:1297:66: E231 missing whitespace after ','
+restaurantapp.py:1297:77: E203 whitespace before ':'
+restaurantapp.py:1297:80: E501 line too long (89 > 79 characters)
+restaurantapp.py:1302:38: E203 whitespace before ':'
+restaurantapp.py:1303:1: W293 blank line contains whitespace
+restaurantapp.py:1305:21: E265 block comment should start with '# '
+restaurantapp.py:1305:80: E501 line too long (112 > 79 characters)
+restaurantapp.py:1306:80: E501 line too long (84 > 79 characters)
+restaurantapp.py:1307:80: E501 line too long (104 > 79 characters)
+restaurantapp.py:1310:1: W293 blank line contains whitespace
+restaurantapp.py:1311:42: E203 whitespace before ':'
+restaurantapp.py:1314:80: E501 line too long (95 > 79 characters)
+restaurantapp.py:1318:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:1319:80: E501 line too long (134 > 79 characters)
+restaurantapp.py:1323:29: E303 too many blank lines (2)
+restaurantapp.py:1324:58: W291 trailing whitespace
+restaurantapp.py:1325:51: W291 trailing whitespace
+restaurantapp.py:1327:80: E501 line too long (148 > 79 characters)
+restaurantapp.py:1331:80: E501 line too long (113 > 79 characters)
+restaurantapp.py:1332:25: E203 whitespace before ':'
+restaurantapp.py:1333:25: E265 block comment should start with '# '
+restaurantapp.py:1333:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:1334:80: E501 line too long (107 > 79 characters)
+restaurantapp.py:1337:29: E265 block comment should start with '# '
+restaurantapp.py:1337:80: E501 line too long (107 > 79 characters)
+restaurantapp.py:1338:80: E501 line too long (103 > 79 characters)
+restaurantapp.py:1341:1: W293 blank line contains whitespace
+restaurantapp.py:1343:9: E303 too many blank lines (2)
+restaurantapp.py:1345:27: E222 multiple spaces after operator
+restaurantapp.py:1347:17: E265 block comment should start with '# '
+restaurantapp.py:1348:53: E231 missing whitespace after ','
+restaurantapp.py:1348:80: E501 line too long (82 > 79 characters)
+restaurantapp.py:1351:22: E111 indentation is not a multiple of 4
+restaurantapp.py:1351:22: E117 over-indented
+restaurantapp.py:1351:80: E501 line too long (96 > 79 characters)
+restaurantapp.py:1352:1: W293 blank line contains whitespace
+restaurantapp.py:1353:1: W293 blank line contains whitespace
+restaurantapp.py:1354:13: E303 too many blank lines (2)
+restaurantapp.py:1356:65: W291 trailing whitespace
+restaurantapp.py:1359:1: W293 blank line contains whitespace
+restaurantapp.py:1362:17: E303 too many blank lines (3)
+restaurantapp.py:1366:1: W293 blank line contains whitespace
+restaurantapp.py:1369:1: W293 blank line contains whitespace
+restaurantapp.py:1370:1: W293 blank line contains whitespace
+restaurantapp.py:1371:17: E303 too many blank lines (2)
+restaurantapp.py:1372:1: W293 blank line contains whitespace
+restaurantapp.py:1380:80: E501 line too long (102 > 79 characters)
+restaurantapp.py:1382:1: W293 blank line contains whitespace
+restaurantapp.py:1383:1: W293 blank line contains whitespace
+restaurantapp.py:1384:17: E303 too many blank lines (3)
+restaurantapp.py:1392:1: W293 blank line contains whitespace
+restaurantapp.py:1393:17: E303 too many blank lines (2)
+restaurantapp.py:1398:27: E222 multiple spaces after operator
+restaurantapp.py:1400:29: F541 f-string is missing placeholders
+restaurantapp.py:1403:22: E111 indentation is not a multiple of 4
+restaurantapp.py:1403:22: E117 over-indented
+restaurantapp.py:1403:80: E501 line too long (96 > 79 characters)
+restaurantapp.py:1411:1: W293 blank line contains whitespace
+restaurantapp.py:1412:42: E203 whitespace before ':'
+restaurantapp.py:1413:1: W293 blank line contains whitespace
+restaurantapp.py:1415:70: W291 trailing whitespace
+restaurantapp.py:1418:1: W293 blank line contains whitespace
+restaurantapp.py:1421:21: E303 too many blank lines (3)
+restaurantapp.py:1425:1: W293 blank line contains whitespace
+restaurantapp.py:1428:1: W293 blank line contains whitespace
+restaurantapp.py:1429:1: W293 blank line contains whitespace
+restaurantapp.py:1430:21: E303 too many blank lines (2)
+restaurantapp.py:1431:1: W293 blank line contains whitespace
+restaurantapp.py:1432:1: W293 blank line contains whitespace
+restaurantapp.py:1433:21: E303 too many blank lines (2)
+restaurantapp.py:1439:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:1441:1: W293 blank line contains whitespace
+restaurantapp.py:1442:1: W293 blank line contains whitespace
+restaurantapp.py:1443:21: E303 too many blank lines (3)
+restaurantapp.py:1451:1: W293 blank line contains whitespace
+restaurantapp.py:1452:21: E303 too many blank lines (2)
+restaurantapp.py:1454:21: E203 whitespace before ':'
+restaurantapp.py:1455:1: W293 blank line contains whitespace
+restaurantapp.py:1457:70: W291 trailing whitespace
+restaurantapp.py:1460:1: W293 blank line contains whitespace
+restaurantapp.py:1463:21: E303 too many blank lines (3)
+restaurantapp.py:1467:1: W293 blank line contains whitespace
+restaurantapp.py:1470:1: W293 blank line contains whitespace
+restaurantapp.py:1471:1: W293 blank line contains whitespace
+restaurantapp.py:1472:21: E303 too many blank lines (2)
+restaurantapp.py:1473:1: W293 blank line contains whitespace
+restaurantapp.py:1474:1: W293 blank line contains whitespace
+restaurantapp.py:1475:21: E303 too many blank lines (2)
+restaurantapp.py:1481:80: E501 line too long (109 > 79 characters)
+restaurantapp.py:1483:1: W293 blank line contains whitespace
+restaurantapp.py:1484:1: W293 blank line contains whitespace
+restaurantapp.py:1485:21: E303 too many blank lines (3)
+restaurantapp.py:1493:1: W293 blank line contains whitespace
+restaurantapp.py:1494:21: E303 too many blank lines (2)
+restaurantapp.py:1498:1: W293 blank line contains whitespace
+restaurantapp.py:1500:18: E203 whitespace before ':'
+restaurantapp.py:1501:18: E203 whitespace before ':'
+restaurantapp.py:1502:18: E203 whitespace before ':'
+restaurantapp.py:1503:18: E203 whitespace before ':'
+restaurantapp.py:1506:18: E203 whitespace before ':'
+restaurantapp.py:1507:18: E203 whitespace before ':'
+restaurantapp.py:1508:18: E203 whitespace before ':'
+restaurantapp.py:1509:18: E203 whitespace before ':'
+restaurantapp.py:1512:18: E203 whitespace before ':'
+restaurantapp.py:1513:18: E203 whitespace before ':'
+restaurantapp.py:1514:18: E203 whitespace before ':'
+restaurantapp.py:1515:18: E203 whitespace before ':'
+restaurantapp.py:1519:25: E203 whitespace before ':'
+restaurantapp.py:1520:22: E203 whitespace before ':'
+restaurantapp.py:1521:23: E203 whitespace before ':'
+restaurantapp.py:1522:25: E203 whitespace before ':'
+restaurantapp.py:1524:1: W293 blank line contains whitespace
+restaurantapp.py:1526:34: E203 whitespace before ':'
+restaurantapp.py:1527:31: E203 whitespace before ':'
+restaurantapp.py:1528:32: E203 whitespace before ':'
+restaurantapp.py:1529:37: E203 whitespace before ':'
+restaurantapp.py:1531:1: W293 blank line contains whitespace
+restaurantapp.py:1533:18: E203 whitespace before ':'
+restaurantapp.py:1534:18: E203 whitespace before ':'
+restaurantapp.py:1535:18: E203 whitespace before ':'
+restaurantapp.py:1536:18: E203 whitespace before ':'
+restaurantapp.py:1567:1: W293 blank line contains whitespace
+restaurantapp.py:1569:1: W293 blank line contains whitespace
+restaurantapp.py:1571:13: E303 too many blank lines (5)
+restaurantapp.py:1573:1: W293 blank line contains whitespace
+restaurantapp.py:1574:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:1588:1: W293 blank line contains whitespace
+restaurantapp.py:1590:61: E231 missing whitespace after ','
+restaurantapp.py:1590:80: E501 line too long (86 > 79 characters)
+restaurantapp.py:1595:48: E203 whitespace before ':'
+restaurantapp.py:1600:13: E265 block comment should start with '# '
+restaurantapp.py:1603:80: E501 line too long (86 > 79 characters)
+restaurantapp.py:1605:1: W293 blank line contains whitespace
+restaurantapp.py:1606:13: E303 too many blank lines (2)
+restaurantapp.py:1607:43: E203 whitespace before ':'
+restaurantapp.py:1610:32: W291 trailing whitespace
+restaurantapp.py:1611:46: E203 whitespace before ':'
+restaurantapp.py:1612:26: E203 whitespace before ':'
+restaurantapp.py:1614:21: E203 whitespace before ':'
+restaurantapp.py:1615:53: E203 whitespace before ':'
+restaurantapp.py:1617:25: E203 whitespace before ':'
+restaurantapp.py:1620:46: E203 whitespace before ':'
+restaurantapp.py:1621:49: E203 whitespace before ':'
+restaurantapp.py:1623:21: E203 whitespace before ':'
+restaurantapp.py:1625:1: W293 blank line contains whitespace
+restaurantapp.py:1626:1: W293 blank line contains whitespace
+restaurantapp.py:1627:13: E303 too many blank lines (2)
+restaurantapp.py:1628:39: E203 whitespace before ':'
+restaurantapp.py:1629:80: E501 line too long (91 > 79 characters)
+restaurantapp.py:1630:38: E203 whitespace before ':'
+restaurantapp.py:1631:80: E501 line too long (85 > 79 characters)
+restaurantapp.py:1632:39: E203 whitespace before ':'
+restaurantapp.py:1633:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:1634:17: E203 whitespace before ':'
+restaurantapp.py:1635:80: E501 line too long (92 > 79 characters)
+restaurantapp.py:1637:80: E501 line too long (125 > 79 characters)
+restaurantapp.py:1638:36: E203 whitespace before ':'
+restaurantapp.py:1640:50: E203 whitespace before ':'
+restaurantapp.py:1641:57: E203 whitespace before ':'
+restaurantapp.py:1642:34: E203 whitespace before ':'
+restaurantapp.py:1644:29: E203 whitespace before ':'
+restaurantapp.py:1648:46: E203 whitespace before ':'
+restaurantapp.py:1649:53: E203 whitespace before ':'
+restaurantapp.py:1651:1: W293 blank line contains whitespace
+restaurantapp.py:1653:13: E303 too many blank lines (2)
+restaurantapp.py:1655:1: W293 blank line contains whitespace
+restaurantapp.py:1657:13: E303 too many blank lines (2)
+restaurantapp.py:1658:39: E203 whitespace before ':'
+restaurantapp.py:1659:21: E265 block comment should start with '# '
+restaurantapp.py:1661:1: W293 blank line contains whitespace
+restaurantapp.py:1662:1: W293 blank line contains whitespace
+restaurantapp.py:1663:13: E303 too many blank lines (2)
+restaurantapp.py:1663:44: E203 whitespace before ':'
+restaurantapp.py:1664:26: E203 whitespace before ':'
+restaurantapp.py:1666:21: E203 whitespace before ':'
+restaurantapp.py:1668:1: W293 blank line contains whitespace
+restaurantapp.py:1672:1: W293 blank line contains whitespace
+restaurantapp.py:1674:37: W291 trailing whitespace
+restaurantapp.py:1675:18: E131 continuation line unaligned for hanging indent
+restaurantapp.py:1680:38: E203 whitespace before ':'
+restaurantapp.py:1682:37: E203 whitespace before ':'
+restaurantapp.py:1684:1: W293 blank line contains whitespace
+restaurantapp.py:1685:13: E265 block comment should start with '# '
+restaurantapp.py:1686:13: E265 block comment should start with '# '
+restaurantapp.py:1688:15: E275 missing whitespace after keyword
+restaurantapp.py:1690:53: W291 trailing whitespace
+restaurantapp.py:1691:1: W293 blank line contains whitespace
+restaurantapp.py:1693:60: E231 missing whitespace after ','
+restaurantapp.py:1695:1: W293 blank line contains whitespace
+restaurantapp.py:1696:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:1699:22: E111 indentation is not a multiple of 4
+restaurantapp.py:1699:22: E117 over-indented
+restaurantapp.py:1699:80: E501 line too long (96 > 79 characters)
+restaurantapp.py:1708:13: E265 block comment should start with '# '
+restaurantapp.py:1711:1: W293 blank line contains whitespace
+restaurantapp.py:1712:1: W293 blank line contains whitespace
+restaurantapp.py:1713:13: E303 too many blank lines (2)
+restaurantapp.py:1713:13: E265 block comment should start with '# '
+restaurantapp.py:1714:13: E265 block comment should start with '# '
+restaurantapp.py:1716:13: E265 block comment should start with '# '
+restaurantapp.py:1717:13: E265 block comment should start with '# '
+restaurantapp.py:1717:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:1722:80: E501 line too long (114 > 79 characters)
+restaurantapp.py:1725:1: W293 blank line contains whitespace
+restaurantapp.py:1726:31: E231 missing whitespace after ','
+restaurantapp.py:1726:42: E203 whitespace before ':'
+restaurantapp.py:1727:1: W293 blank line contains whitespace
+restaurantapp.py:1729:1: W293 blank line contains whitespace
+restaurantapp.py:1730:52: E231 missing whitespace after ','
+restaurantapp.py:1732:1: W293 blank line contains whitespace
+restaurantapp.py:1735:39: E231 missing whitespace after ','
+restaurantapp.py:1738:80: E501 line too long (95 > 79 characters)
+restaurantapp.py:1739:55: E231 missing whitespace after ','
+restaurantapp.py:1741:45: E203 whitespace before ':'
+restaurantapp.py:1748:39: E231 missing whitespace after ','
+restaurantapp.py:1749:21: E225 missing whitespace around operator
+restaurantapp.py:1752:28: E222 multiple spaces after operator
+restaurantapp.py:1752:47: E231 missing whitespace after ','
+restaurantapp.py:1753:29: E203 whitespace before ':'
+restaurantapp.py:1755:56: E231 missing whitespace after ','
+restaurantapp.py:1756:1: W293 blank line contains whitespace
+restaurantapp.py:1757:33: E203 whitespace before ':'
+restaurantapp.py:1760:44: E231 missing whitespace after ','
+restaurantapp.py:1761:17: E265 block comment should start with '# '
+restaurantapp.py:1763:38: E231 missing whitespace after ','
+restaurantapp.py:1763:43: E231 missing whitespace after ','
+restaurantapp.py:1766:63: E203 whitespace before ':'
+restaurantapp.py:1770:1: W293 blank line contains whitespace
+restaurantapp.py:1776:1: W293 blank line contains whitespace
+restaurantapp.py:1782:33: E265 block comment should start with '# '
+restaurantapp.py:1783:65: E231 missing whitespace after ','
+restaurantapp.py:1784:1: W293 blank line contains whitespace
+restaurantapp.py:1785:46: E203 whitespace before ':'
+restaurantapp.py:1786:73: E231 missing whitespace after ','
+restaurantapp.py:1786:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:1789:58: E231 missing whitespace after ','
+restaurantapp.py:1789:63: E231 missing whitespace after ','
+restaurantapp.py:1791:1: W293 blank line contains whitespace
+restaurantapp.py:1793:1: W293 blank line contains whitespace
+restaurantapp.py:1794:66: E203 whitespace before ':'
+restaurantapp.py:1795:80: E501 line too long (87 > 79 characters)
+restaurantapp.py:1796:80: E501 line too long (82 > 79 characters)
+restaurantapp.py:1797:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:1798:58: E231 missing whitespace after ','
+restaurantapp.py:1798:63: E231 missing whitespace after ','
+restaurantapp.py:1799:37: E203 whitespace before ':'
+restaurantapp.py:1801:80: E501 line too long (85 > 79 characters)
+restaurantapp.py:1802:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:1804:58: E231 missing whitespace after ','
+restaurantapp.py:1804:63: E231 missing whitespace after ','
+restaurantapp.py:1806:1: W293 blank line contains whitespace
+restaurantapp.py:1810:80: E501 line too long (86 > 79 characters)
+restaurantapp.py:1811:29: E265 block comment should start with '# '
+restaurantapp.py:1812:1: W293 blank line contains whitespace
+restaurantapp.py:1814:80: E501 line too long (103 > 79 characters)
+restaurantapp.py:1815:1: W293 blank line contains whitespace
+restaurantapp.py:1821:46: E203 whitespace before ':'
+restaurantapp.py:1822:1: W293 blank line contains whitespace
+restaurantapp.py:1825:56: E203 whitespace before ':'
+restaurantapp.py:1826:80: E501 line too long (80 > 79 characters)
+restaurantapp.py:1827:25: E265 block comment should start with '# '
+restaurantapp.py:1828:36: E203 whitespace before ':'
+restaurantapp.py:1829:29: E265 block comment should start with '# '
+restaurantapp.py:1830:67: E231 missing whitespace after ','
+restaurantapp.py:1830:72: E231 missing whitespace after ','
+restaurantapp.py:1831:29: E265 block comment should start with '# '
+restaurantapp.py:1832:78: E231 missing whitespace after ','
+restaurantapp.py:1832:80: E501 line too long (86 > 79 characters)
+restaurantapp.py:1833:80: E501 line too long (82 > 79 characters)
+restaurantapp.py:1834:80: E501 line too long (81 > 79 characters)
+restaurantapp.py:1835:50: E231 missing whitespace after ','
+restaurantapp.py:1835:55: E231 missing whitespace after ','
+restaurantapp.py:1838:44: E231 missing whitespace after ','
+restaurantapp.py:1838:48: E231 missing whitespace after ','
+restaurantapp.py:1838:54: E231 missing whitespace after ','
+restaurantapp.py:1840:29: E203 whitespace before ':'
+restaurantapp.py:1841:80: E501 line too long (93 > 79 characters)
+restaurantapp.py:1841:85: E231 missing whitespace after ','
+restaurantapp.py:1842:80: E501 line too long (89 > 79 characters)
+restaurantapp.py:1843:80: E501 line too long (88 > 79 characters)
+restaurantapp.py:1844:50: E231 missing whitespace after ','
+restaurantapp.py:1844:55: E231 missing whitespace after ','
+restaurantapp.py:1846:73: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:1846:75: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:1846:80: E501 line too long (114 > 79 characters)
+restaurantapp.py:1846:88: E231 missing whitespace after ','
+restaurantapp.py:1846:99: E231 missing whitespace after ','
+restaurantapp.py:1846:107: E231 missing whitespace after ','
+restaurantapp.py:1852:27: F541 f-string is missing placeholders
+restaurantapp.py:1852:80: E501 line too long (100 > 79 characters)
+restaurantapp.py:1852:92: E231 missing whitespace after ','
+restaurantapp.py:1853:80: E501 line too long (93 > 79 characters)
+restaurantapp.py:1854:80: E501 line too long (94 > 79 characters)
+restaurantapp.py:1855:42: E231 missing whitespace after ','
+restaurantapp.py:1855:47: E231 missing whitespace after ','
+restaurantapp.py:1858:50: E231 missing whitespace after ','
+restaurantapp.py:1858:55: E231 missing whitespace after ','
+restaurantapp.py:1861:21: E265 block comment should start with '# '
+restaurantapp.py:1861:80: E501 line too long (112 > 79 characters)
+restaurantapp.py:1863:1: W293 blank line contains whitespace
+restaurantapp.py:1864:46: E203 whitespace before ':'
+restaurantapp.py:1865:80: E501 line too long (108 > 79 characters)
+restaurantapp.py:1869:30: F541 f-string is missing placeholders
+restaurantapp.py:1870:79: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:1870:80: E501 line too long (120 > 79 characters)
+restaurantapp.py:1870:81: E251 unexpected spaces around keyword / parameter equals
+restaurantapp.py:1870:94: E231 missing whitespace after ','
+restaurantapp.py:1870:105: E231 missing whitespace after ','
+restaurantapp.py:1870:113: E231 missing whitespace after ','
+restaurantapp.py:1871:1: W293 blank line contains whitespace
+restaurantapp.py:1872:33: F541 f-string is missing placeholders
+restaurantapp.py:1875:26: E111 indentation is not a multiple of 4
+restaurantapp.py:1875:26: E117 over-indented
+restaurantapp.py:1875:80: E501 line too long (101 > 79 characters)
+restaurantapp.py:1876:1: W293 blank line contains whitespace
+restaurantapp.py:1877:1: W293 blank line contains whitespace
+restaurantapp.py:1879:1: E303 too many blank lines (3)

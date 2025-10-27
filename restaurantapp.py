@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
+# import matplotlib
 from datetime import datetime, timedelta, date
-import time
+# import time
 import pytz
 import oracledb
 import os
@@ -21,7 +21,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
-#oracledb.init_oracle_client(thick=False)
+# oracledb.init_oracle_client(thick=False)
 
 # Define BASE_DIR for consistent file paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,8 +40,9 @@ SMTP_HOST = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
 SMTP_PORT = int(os.environ.get('SMTP_PORT', 587))
 EMAIL_USER = os.environ.get('EMAIL_USER')
 EMAIL_PASS = os.environ.get('EMAIL_PASS')
-ALERT_RECIPIENT = os.environ.get('ALERT_RECIPIENT', EMAIL_USER)  # Default to sender
+ALERT_RECIPIENT = os.environ.get('ALERT_RECIPIENT', EMAIL_USER)
 SEND_ALERTS = os.environ.get('SEND_ALERTS', 'true').lower() == 'true'
+
 
 def get_connection():
     """Load DB credentials from environment variables and connect to Oracle."""
@@ -49,7 +50,8 @@ def get_connection():
     password = os.environ.get('DB_PASSWORD')
     dsn = os.environ.get('DB_DSN')
     if not all([user, password, dsn]):
-        st.error("Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
+        st.error(
+            "Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
         return None
     try:
         connection = oracledb.connect(user=user, password=password, dsn=dsn)
@@ -62,24 +64,27 @@ def get_connection():
 # --- Inlined Functions from Original App (Adapted for Streamlit) ---
 
 
-
-
-def load_stock_txn_data(connection) :
+def load_stock_txn_data(connection):
     rec_cnt = 0
-    
-    
-    qry = "select count(*) cnt from STOCK_MAINTENANCE_TXN_TBL where value_date=trim(sysdate)"
-    ins_qry = "insert into STOCK_MAINTENANCE_TXN_TBL (value_date, item_name, avail_stock) select trim(sysdate), item_name, total_stock from STOCK_MAINTENANCE_TBL where delete_flag='N' "
-    
+    qry = (
+            "select count(*) cnt from STOCK_MAINTENANCE_TXN_TBL"
+            "where value_date=trim(sysdate)"
+        )
+    ins_qry = (
+            "insert into STOCK_MAINTENANCE_TXN_TBL"
+            "(value_date, item_name, avail_stock) select trim(sysdate),"
+            "item_name, total_stock from STOCK_MAINTENANCE_TBL
+            "where delete_flag='N' "
+            )
     cursor = connection.cursor()
     cursor.execute(qry)
 
-    for row in cursor.fetchone() :
-        if row is None :
+    for row in cursor.fetchone():
+        if row is None:
              break
         rec_cnt = row
 
-    if rec_cnt == 0 :
+    if rec_cnt == 0:
         cursor.execute(ins_qry)
         connection.commit()
 
@@ -101,7 +106,10 @@ def load_tax_data(connection):
 def get_stock_data(connection):
     """Load stock for current date."""
     cursor = connection.cursor()
-    sel_qry = "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL where value_date=TRIM(SYSDATE)"
+    sel_qry = (
+        "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL"
+        "where value_date=TRIM(SYSDATE)"
+        )
     cursor.execute(sel_qry)
     stock_rec = {}
     while True:
@@ -115,7 +123,10 @@ def get_stock_data(connection):
 def get_shortage_stock_data(connection):
     """Load shortage stock for current date."""
     cursor = connection.cursor()
-    sel_qry = "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL where value_date=TRIM(SYSDATE) and avail_stock = 0"
+    sel_qry = (
+        "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL"
+        "where value_date=TRIM(SYSDATE) and avail_stock = 0"
+        )
     cursor.execute(sel_qry)
     stock_rec = {}
     while True:
@@ -143,7 +154,7 @@ def update_stock_rec(connection, stock_rec):
     connection.commit()
     cursor.close()
 
-def update_tax_amt(connection,tax_category,tax_amount) :
+def update_tax_amt(connection,tax_category,tax_amount):
     category = str(tax_category)
     amt = float(tax_amount)
     cursor = connection.cursor()
@@ -1142,17 +1153,13 @@ elif portal == "Corporate (Admin)":
                 item_options = df_items.set_index('ItemNo')['Name'].to_dict()
                 item_no = st.selectbox("Select Item", options=list(item_options.keys()), format_func=lambda x: f"{x}: {item_options[x]}")
                 matching_row = df_items[df_items['ItemNo'] == item_no]
+                if 'current_price' not in st.session_state:
+                    st.session_state.current_price = 0.0
+                st.session_state.current_price = float(matching_row['Price'].values[0])
                 if st.form_submit_button("Show Price"):
-                    if not matching_row.empty:
-                        current_price = float(matching_row['Price'].values[0])  # Convert Decimal to float
-                    else:
-                        current_price = 0.0  # Fallback
-                    matching_row = df_items[df_items['ItemNo'] == item_no]
-                    if not matching_row.empty:
-                        current_price = float(matching_row['Price'].values[0])  # Convert Decimal to float
-                    else:
-                        current_price = 0.0  # Fallback
-                    new_price = st.number_input("New Price", min_value=0.0, value=current_price)
+                    st.metric("Current Price", st.session_state.current_price)                    
+                new_price = st.number_input("New Price", min_value=0.0, value=0.0)
+                
                 
                 submitted = st.form_submit_button("Update Price")
                 if submitted:
@@ -1369,8 +1376,8 @@ elif portal == "Corporate (Admin)":
                     
                 colors = plt.cm.tab10(np.linspace(0, 1, num_days))
                 
-    
-                bar_width = 0.8/num_days
+                if num_days > 0:
+                    bar_width = 0.8/num_days
                 x = np.arange(len(item_types))
                 fig, ax = plt.subplots()
 
