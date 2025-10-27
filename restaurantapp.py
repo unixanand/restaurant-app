@@ -50,8 +50,7 @@ def get_connection():
     password = os.environ.get('DB_PASSWORD')
     dsn = os.environ.get('DB_DSN')
     if not all([user, password, dsn]):
-        st.error(
-            "Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
+        st.error("Missing DB environment variables: DB_USER, DB_PASSWORD, DB_DSN")
         return None
     try:
         connection = oracledb.connect(user=user, password=password, dsn=dsn)
@@ -66,16 +65,9 @@ def get_connection():
 
 def load_stock_txn_data(connection):
     rec_cnt = 0
-    qry = (
-            "select count(*) cnt from STOCK_MAINTENANCE_TXN_TBL"
-            "where value_date=trim(sysdate)"
-        )
-    ins_qry = (
-            "insert into STOCK_MAINTENANCE_TXN_TBL"
-            "(value_date, item_name, avail_stock) select trim(sysdate),"
-            "item_name, total_stock from STOCK_MAINTENANCE_TBL
-            "where delete_flag='N' "
-            )
+    qry = "select count(*) cnt from STOCK_MAINTENANCE_TXN_TBL where value_date=trim(sysdate)"
+    
+    ins_qry = "insert into STOCK_MAINTENANCE_TXN_TBL (value_date, item_name, avail_stock) select trim(sysdate),item_name, total_stock from STOCK_MAINTENANCE_TBL where delete_flag='N' "
     cursor = connection.cursor()
     cursor.execute(qry)
 
@@ -106,10 +98,7 @@ def load_tax_data(connection):
 def get_stock_data(connection):
     """Load stock for current date."""
     cursor = connection.cursor()
-    sel_qry = (
-        "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL"
-        "where value_date=TRIM(SYSDATE)"
-        )
+    sel_qry = "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL where value_date=TRIM(SYSDATE)"
     cursor.execute(sel_qry)
     stock_rec = {}
     while True:
@@ -123,10 +112,7 @@ def get_stock_data(connection):
 def get_shortage_stock_data(connection):
     """Load shortage stock for current date."""
     cursor = connection.cursor()
-    sel_qry = (
-        "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL"
-        "where value_date=TRIM(SYSDATE) and avail_stock = 0"
-        )
+    sel_qry = "select item_name, avail_stock from STOCK_MAINTENANCE_TXN_TBL where value_date=TRIM(SYSDATE) and avail_stock = 0"
     cursor.execute(sel_qry)
     stock_rec = {}
     while True:
