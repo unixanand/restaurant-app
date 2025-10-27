@@ -1090,7 +1090,10 @@ elif portal == "Corporate (Admin)":
                 if category == "Chat"  :
                     item_category = st.text_input("Enter VEG / NV")
             if action != 'Delete' :
-                tax_slab = st.text_input("Tax Tier (TIER2/3)")
+                if category == 'Coffee' or  category == 'Tea':
+                    tax_slab = st.text_input("Tax Tier (TIER1)")
+                else:
+                    tax_slab = st.text_input("Tax Tier (TIER2/3)")
             submitted = st.form_submit_button(f"{action} Item")
             if submitted:
                 cursor = connection.cursor()
